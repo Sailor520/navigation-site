@@ -10,6 +10,7 @@ import { Toaster } from "@/components/ui/toaster"
 import { BlueLightIndicator } from "@/components/blue-light-indicator"
 import { AuthProvider } from "@/lib/admin-auth-context"
 import { ErrorBoundary } from "@/components/error-boundary"
+import { ChunkErrorBoundary } from "@/components/chunk-error-boundary"
 import { GlobalErrorHandler } from "@/app/global-error-handler"
 import { ExtensionWarning } from "@/components/extension-warning"
 
@@ -79,14 +80,38 @@ export default function RootLayout({
                   }
                   return originalJSONParse.call(this, text, reviver);
                 };
+                
+                // 处理代码分割加载失败
+                window.addEventListener('unhandledrejection', function(event) {
+                  if (event.reason && event.reason.name === 'ChunkLoadError') {
+                    console.warn('🔧 [代码分割错误] 检测到代码块加载失败，将重新加载页面');
+                    event.preventDefault();
+                    // 延迟重新加载，避免无限循环
+                    setTimeout(() => {
+                      window.location.reload();
+                    }, 1000);
+                  }
+                });
+                
+                // 注册服务工作者以提高资源加载稳定性
+                if ('serviceWorker' in navigator) {
+                  navigator.serviceWorker.register('/sw.js')
+                    .then((registration) => {
+                      console.log('🔧 [Service Worker] 注册成功:', registration);
+                    })
+                    .catch((error) => {
+                      console.warn('🔧 [Service Worker] 注册失败:', error);
+                    });
+                }
               })();
             `,
           }}
         />
       </head>
       <body className={inter.className}>
-        <ErrorBoundary>
-          <ThemeProvider
+        <ChunkErrorBoundary>
+          <ErrorBoundary>
+            <ThemeProvider
             attribute="class"
             defaultTheme="system"
             enableSystem
@@ -99,7 +124,7 @@ export default function RootLayout({
                 <Header />
                 <div className="flex flex-1 overflow-hidden">
                   <Sidebar />
-                  <main className="flex-1 overflow-auto p-4 md:p-6">{children}</main>
+                  <main className="flex-1 overflow-auto p-4 md:p-6 transition-all duration-300">{children}</main>
                 </div>
                 <Footer />
               </div>
@@ -110,6 +135,7 @@ export default function RootLayout({
             </AuthProvider>
           </ThemeProvider>
         </ErrorBoundary>
+        </ChunkErrorBoundary>
       </body>
     </html>
   )

@@ -1,0 +1,102 @@
+{
+  "pages": {
+    "/global-error": [
+      "static/chunks/webpack.js",
+      "static/chunks/vendors.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/global-error.js"
+    ],
+    "/layout": [
+      "static/chunks/webpack.js",
+      "static/chunks/vendors.js",
+      "static/chunks/main-app.js",
+      "static/chunks/default-_app-pages-browser_components_ui_button_tsx-_app-pages-browser_components_ui_card_tsx-093843.js",
+      "static/chunks/default-_app-pages-browser_components_ui_form_tsx-_app-pages-browser_components_ui_input_tsx--fbe8cc.js",
+      "static/chunks/default-_app-pages-browser_components_ui_alert_tsx-_app-pages-browser_lib_admin-auth-context_tsx.js",
+      "static/chunks/default-_app-pages-browser_components_ui_checkbox_tsx-_app-pages-browser_lib_store_ts.js",
+      "static/chunks/default-_app-pages-browser_components_ui_badge_tsx-_app-pages-browser_components_website-card_tsx.js",
+      "static/chunks/default-_app-pages-browser_components_error-boundary_tsx.js",
+      "static/css/app/layout.css",
+      "static/chunks/app/layout.js"
+    ],
+    "/error": [
+      "static/chunks/webpack.js",
+      "static/chunks/vendors.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/error.js"
+    ],
+    "/loading": [
+      "static/chunks/webpack.js",
+      "static/chunks/vendors.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/loading.js"
+    ],
+    "/not-found": [
+      "static/chunks/webpack.js",
+      "static/chunks/vendors.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/not-found.js"
+    ],
+    "/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/vendors.js",
+      "static/chunks/main-app.js",
+      "static/chunks/default-_app-pages-browser_components_ui_button_tsx-_app-pages-browser_components_ui_card_tsx-093843.js",
+      "static/chunks/default-_app-pages-browser_components_ui_form_tsx-_app-pages-browser_components_ui_input_tsx--fbe8cc.js",
+      "static/chunks/default-_app-pages-browser_components_ui_checkbox_tsx-_app-pages-browser_lib_store_ts.js",
+      "static/chunks/default-_app-pages-browser_components_ui_badge_tsx-_app-pages-browser_components_website-card_tsx.js",
+      "static/chunks/app/page.js"
+    ],
+    "/admin/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/vendors.js",
+      "static/chunks/main-app.js",
+      "static/chunks/default-_app-pages-browser_components_ui_button_tsx-_app-pages-browser_components_ui_card_tsx-093843.js",
+      "static/chunks/default-_app-pages-browser_components_ui_form_tsx-_app-pages-browser_components_ui_input_tsx--fbe8cc.js",
+      "static/chunks/default-_app-pages-browser_components_ui_alert_tsx-_app-pages-browser_lib_admin-auth-context_tsx.js",
+      "static/chunks/default-_app-pages-browser_components_ui_checkbox_tsx-_app-pages-browser_lib_store_ts.js",
+      "static/chunks/default-_app-pages-browser_components_error-boundary_tsx.js",
+      "static/chunks/app/admin/page.js"
+    ],
+    "/admin/settings/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/vendors.js",
+      "static/chunks/main-app.js",
+      "static/chunks/default-_app-pages-browser_components_ui_button_tsx-_app-pages-browser_components_ui_card_tsx-093843.js",
+      "static/chunks/default-_app-pages-browser_components_ui_alert_tsx-_app-pages-browser_lib_admin-auth-context_tsx.js",
+      "static/chunks/app/admin/settings/page.js"
+    ],
+    "/api/deployment-info/route": [
+      "static/chunks/webpack.js",
+      "static/chunks/vendors.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/api/deployment-info/route.js"
+    ],
+    "/about/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/vendors.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/about/page.js"
+    ],
+    "/contact/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/vendors.js",
+      "static/chunks/main-app.js",
+      "static/chunks/default-_app-pages-browser_components_ui_button_tsx-_app-pages-browser_components_ui_card_tsx-093843.js",
+      "static/chunks/default-_app-pages-browser_components_ui_form_tsx-_app-pages-browser_components_ui_input_tsx--fbe8cc.js",
+      "static/chunks/app/contact/page.js"
+    ],
+    "/terms/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/vendors.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/terms/page.js"
+    ],
+    "/api/metadata/route": [
+      "static/chunks/webpack.js",
+      "static/chunks/vendors.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/api/metadata/route.js"
+    ]
+  }
+}

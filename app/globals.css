@@ -686,7 +686,39 @@
 
 /* 工具提示在深色模式下的优化 */
 .dark [role="tooltip"] {
-  background-color: hsl(var(--popover));
-  border-color: hsl(var(--border));
-  color: hsl(var(--popover-foreground));
+  @apply bg-slate-700 text-slate-100 border-slate-600;
+}
+
+/* 侧边栏布局样式 */
+.sidebar-collapsed {
+  margin-left: 4rem !important;
+}
+
+.sidebar-expanded {
+  margin-left: 15rem !important;
+}
+
+/* 响应式侧边栏处理 */
+@media (max-width: 768px) {
+  .sidebar-collapsed,
+  .sidebar-expanded {
+    margin-left: 0 !important;
+  }
+}
+
+/* 平滑过渡效果 */
+main {
+  transition: margin-left 0.3s ease-in-out;
+}
+
+/* 侧边栏固定定位时的内容区域调整 */
+@media (min-width: 768px) {
+  .content-with-sidebar {
+    margin-left: 240px;
+    transition: margin-left 0.3s ease-in-out;
+  }
+  
+  .content-with-sidebar.sidebar-collapsed {
+    margin-left: 64px;
+  }
 }

@@ -10,7 +10,7 @@ import { ScrollArea } from "@/components/ui/scroll-area"
 import { Sheet, SheetContent } from "@/components/ui/sheet"
 import { useSidebarStore, useDataStore } from "@/lib/store"
 import { cn } from "@/lib/utils"
-import { GripVertical } from "lucide-react"
+import { GripVertical, ChevronLeft, ChevronRight } from "lucide-react"
 import { useToast } from "@/components/ui/use-toast"
 import { useAdminAuth } from "@/lib/admin-auth-context"
 
@@ -21,30 +21,54 @@ export function Sidebar() {
   const { isAuthenticated } = useAdminAuth()
   const { toast } = useToast()
   const [isMounted, setIsMounted] = useState(false)
+  const [isCollapsed, setIsCollapsed] = useState(false)
 
   // 确保组件已挂载
   useEffect(() => {
     setIsMounted(true)
   }, [])
 
+  // 管理主内容区域的左边距
+  useEffect(() => {
+    if (!isMounted) return
+    
+    const mainElement = document.querySelector('main')
+    if (mainElement && window.innerWidth >= 768) {
+      if (isCollapsed) {
+        mainElement.style.marginLeft = '64px'
+      } else {
+        mainElement.style.marginLeft = '240px'
+      }
+    }
+  }, [isCollapsed, isMounted])
+
   // Close sidebar when navigating on mobile
   useEffect(() => {
     if (!isMounted) return
 
     const handleResize = () => {
+      const mainElement = document.querySelector('main')
       if (window.innerWidth >= 768) {
+        // 桌面端：应用侧边栏边距
+        if (mainElement) {
+          mainElement.style.marginLeft = isCollapsed ? '64px' : '240px'
+        }
         return
+      } else {
+        // 移动端：重置边距并关闭侧边栏
+        if (mainElement) {
+          mainElement.style.marginLeft = '0px'
+        }
+        setIsOpen(false)
       }
-      setIsOpen(false)
     }
 
-    if (window.innerWidth < 768) {
-      setIsOpen(false)
-    }
+    // 初始调整
+    handleResize()
 
     window.addEventListener("resize", handleResize)
     return () => window.removeEventListener("resize", handleResize)
-  }, [pathname, setIsOpen, isMounted])
+  }, [pathname, setIsOpen, isMounted, isCollapsed])
 
   // 如果还没有挂载，返回一个占位符
   if (!isMounted) {
@@ -78,12 +102,34 @@ export function Sidebar() {
             onMoveWebsiteToCategory={moveWebsiteToCategory}
             isAdminMode={isAuthenticated}
             toast={toast}
+            isCollapsed={false}
           />
         </SheetContent>
       </Sheet>
 
-      {/* Desktop sidebar - 固定显示，不再可收起 */}
-      <div className="hidden border-r bg-background md:block w-[240px]">
+      {/* Desktop sidebar - 新增收起/展开功能，固定定位 */}
+      <div className={cn(
+        "hidden md:block transition-all duration-300 border-r bg-background",
+        "fixed left-0 top-16 bottom-0 z-30",
+        isCollapsed ? "w-16" : "w-[240px]"
+      )}>
+        {/* 收起/展开按钮 */}
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={() => setIsCollapsed(!isCollapsed)}
+          className={cn(
+            "absolute -right-3 top-6 z-40 h-6 w-6 rounded-full border bg-background p-0 shadow-md hover:shadow-lg",
+            "flex items-center justify-center"
+          )}
+        >
+          {isCollapsed ? (
+            <ChevronRight className="h-3 w-3" />
+          ) : (
+            <ChevronLeft className="h-3 w-3" />
+          )}
+        </Button>
+
         <SidebarContent
           pathname={pathname}
           categories={categories}
@@ -91,6 +137,7 @@ export function Sidebar() {
           onMoveWebsiteToCategory={moveWebsiteToCategory}
           isAdminMode={isAuthenticated}
           toast={toast}
+          isCollapsed={isCollapsed}
         />
       </div>
     </>
@@ -104,6 +151,7 @@ function SidebarContent({
   onMoveWebsiteToCategory,
   isAdminMode,
   toast,
+  isCollapsed = false,
 }: {
   pathname: string
   categories: any[]
@@ -111,6 +159,7 @@ function SidebarContent({
   onMoveWebsiteToCategory: (websiteId: string, categoryId: string) => void
   isAdminMode: boolean
   toast: any
+  isCollapsed?: boolean
 }) {
   const router = useRouter()
   const { getWebsitesByCategory } = useDataStore()
@@ -210,11 +259,25 @@ function SidebarContent({
   return (
     <ScrollArea className="h-full py-6">
       <div className="px-3 py-2">
-        <h2 className="mb-2 px-4 text-lg font-semibold">网站分类</h2>
-        {isAdminMode && <p className="mb-4 px-4 text-xs text-muted-foreground">拖拽网站卡片到分类名称可添加分类</p>}
+        {!isCollapsed && (
+          <>
+            <h2 className="mb-2 px-4 text-lg font-semibold">网站分类</h2>
+            {isAdminMode && <p className="mb-4 px-4 text-xs text-muted-foreground">拖拽网站卡片到分类名称可添加分类</p>}
+          </>
+        )}
         <div className="space-y-1">
-          <Button asChild variant={pathname === "/" ? "secondary" : "ghost"} className="w-full justify-start">
-            <Link href="/">全部分类 ({totalWebsites})</Link>
+          <Button 
+            asChild 
+            variant={pathname === "/" ? "secondary" : "ghost"} 
+            className={cn(
+              "w-full",
+              isCollapsed ? "justify-center px-2" : "justify-start"
+            )}
+            title={isCollapsed ? `全部分类 (${totalWebsites})` : undefined}
+          >
+            <Link href="/">
+              {isCollapsed ? "全" : `全部分类 (${totalWebsites})`}
+            </Link>
           </Button>
 
           {categories.map((category, index) => {
@@ -227,24 +290,29 @@ function SidebarContent({
                   dragOverIndex === index && "bg-accent",
                   draggedIndex === index && "opacity-50",
                 )}
-                draggable={isAdminMode}
+                draggable={isAdminMode && !isCollapsed}
                 onDragStart={(e) => handleDragStart(e, index)}
                 onDragOver={(e) => handleDragOver(e, index)}
                 onDragLeave={handleDragLeave}
                 onDrop={(e) => handleDrop(e, index)}
                 onDragEnd={handleDragEnd}
               >
-                {isAdminMode && (
+                {isAdminMode && !isCollapsed && (
                   <div className="flex h-9 w-6 items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity cursor-grab active:cursor-grabbing">
                     <GripVertical className="h-4 w-4 text-muted-foreground" />
                   </div>
                 )}
                 <Button
                   variant="ghost"
-                  className={cn("flex-1 justify-start h-9", isAdminMode ? "px-2" : "px-4")}
+                  className={cn(
+                    "flex-1 h-9",
+                    isCollapsed ? "justify-center px-2" : "justify-start",
+                    isAdminMode && !isCollapsed ? "px-2" : !isCollapsed ? "px-4" : "px-2"
+                  )}
                   onClick={() => handleCategoryClick(category.id)}
+                  title={isCollapsed ? `${category.name} (${websiteCount})` : undefined}
                 >
-                  {category.name} ({websiteCount})
+                  {isCollapsed ? category.name.charAt(0) : `${category.name} (${websiteCount})`}
                 </Button>
               </div>
             )

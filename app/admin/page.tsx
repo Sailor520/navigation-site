@@ -20,6 +20,16 @@ export default function AdminPage() {
   const router = useRouter()
   const [isLoading, setIsLoading] = useState(true)
   const [isMounted, setIsMounted] = useState(false)
+  
+  // 调试日志
+  useEffect(() => {
+    console.log('Admin页面状态:', {
+      isMounted,
+      isLoading,
+      isAuthenticated,
+      pathname: window.location.pathname
+    })
+  }, [isMounted, isLoading, isAuthenticated])
 
   // 确保组件已挂载
   useEffect(() => {
@@ -27,21 +37,27 @@ export default function AdminPage() {
     setIsLoading(false)
   }, [])
 
-  // 如果未认证，重定向到首页
+  // 如果未认证，重定向到首页 - 添加延迟避免闪烁和路由冲突
   useEffect(() => {
     if (isMounted && !isLoading && !isAuthenticated) {
-      console.log("未认证，重定向到首页")
-      router.push("/")
+      console.log("未认证，准备重定向到首页")
+      // 添加小延迟确保所有状态都已稳定
+      const timer = setTimeout(() => {
+        console.log("执行重定向到首页")
+        router.replace("/") // 使用 replace 而不是 push 避免历史记录问题
+      }, 100)
+      
+      return () => clearTimeout(timer)
     }
   }, [isAuthenticated, router, isMounted, isLoading])
 
-  // 显示加载状态
+  // 显示加载状态 - 确保在认证状态确定前不渲染内容
   if (isLoading || !isMounted) {
     return (
       <div className="flex items-center justify-center h-[50vh]">
         <div className="flex flex-col items-center gap-4">
           <div className="h-8 w-8 animate-spin rounded-full border-4 border-gray-300 border-t-blue-600"></div>
-          <p className="text-muted-foreground">加载中...</p>
+          <p className="text-muted-foreground">正在验证访问权限...</p>
         </div>
       </div>
     )

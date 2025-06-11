@@ -61,23 +61,37 @@ export function GlobalErrorHandler() {
       }
 
       // 处理应用相关错误
-      console.error('❌ [应用错误]:', {
-        message: message,
-        filename: filename,
-        line: event.lineno,
-        column: event.colno
-      })
+      const errorInfo = {
+        message: message || '未知错误',
+        filename: filename || '未知文件',
+        line: event.lineno || 0,
+        column: event.colno || 0,
+        timestamp: new Date().toISOString()
+      }
       
-      toast({
-        title: "出现了一个错误",
-        description: "页面遇到了问题，但不影响基本功能的使用",
-        variant: "destructive",
-      })
+      // 只有在有实际错误信息时才输出
+      if (message && message.trim()) {
+        console.error('❌ [应用错误]:', errorInfo)
+        
+                 toast({
+           title: "出现了一个错误",
+           description: "页面遇到了问题，但不影响基本功能的使用",
+           variant: "destructive",
+          })
+       }
     }
 
     // 强化的Promise拒绝处理器
     const handleUnhandledRejection = (event: PromiseRejectionEvent) => {
       const error = event.reason
+      
+      // 如果错误为空或undefined，直接跳过
+      if (!error || error === null || error === undefined) {
+        console.warn('🔒 [Promise保护] 跳过空的Promise拒绝')
+        event.preventDefault()
+        return
+      }
+      
       const message = error?.message || String(error) || ''
       const stack = error?.stack || ''
       
@@ -105,12 +119,29 @@ export function GlobalErrorHandler() {
         return
       }
 
-      console.error('❌ [未处理的Promise拒绝]:', error)
-      toast({
-        title: "网络或数据错误",
-        description: "某个操作失败了，请稍后重试",
-        variant: "destructive",
-      })
+      // 只有在有实际有意义的错误信息时才处理和显示
+      if (error && message && message.trim() && message !== 'undefined' && message !== 'null') {
+        console.error('❌ [未处理的Promise拒绝]:', {
+          error: error,
+          message: message,
+          errorType: typeof error,
+          timestamp: new Date().toISOString()
+        })
+        
+        toast({
+          title: "网络或数据错误",
+          description: "某个操作失败了，请稍后重试",
+          variant: "destructive",
+        })
+      } else {
+        // 对于空或无意义的错误，只做警告记录
+        console.warn('🔒 [Promise保护] 跳过无意义的Promise拒绝:', {
+          errorType: typeof error,
+          errorValue: error,
+          message: message
+        })
+        event.preventDefault()
+      }
     }
 
     // 在最早阶段注册错误监听器，使用捕获阶段确保最高优先级
@@ -146,12 +177,8 @@ export function GlobalErrorHandler() {
 // 用于捕获特定的剪贴板错误
 export function handleClipboardError(error: any) {
   if (error?.message?.includes?.('Copy to clipboard')) {
-    console.warn('剪贴板功能不可用，但这不影响其他功能')
-    toast({
-      title: "剪贴板不可用",
-      description: "您的浏览器或环境不支持剪贴板功能，请手动复制内容",
-      variant: "default",
-    })
+    console.warn('🔒 [剪贴板保护] 剪贴板功能不可用，但这不影响其他功能')
+    // 这个函数应该由调用方处理toast提示，避免依赖问题
     return true // 表示已处理
   }
   return false // 表示未处理

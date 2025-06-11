@@ -1,14 +1,13 @@
-import Link from "next/link"
+import Link from 'next/link'
 
 export default function NotFound() {
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center space-y-4 text-center px-4">
-      <h1 className="text-4xl font-bold text-gray-900 dark:text-gray-100">404</h1>
-      <h2 className="text-2xl font-semibold text-gray-700 dark:text-gray-300">页面未找到</h2>
-      <p className="text-gray-600 dark:text-gray-400 max-w-md">抱歉，您访问的页面不存在或已被移除。</p>
-      <Link
+    <div className="flex flex-col items-center justify-center min-h-[50vh] text-center">
+      <h2 className="text-2xl font-bold mb-4">页面未找到</h2>
+      <p className="text-muted-foreground mb-4">抱歉，您访问的页面不存在。</p>
+      <Link 
         href="/"
-        className="inline-flex items-center justify-center rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors"
+        className="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2"
       >
         返回首页
       </Link>
