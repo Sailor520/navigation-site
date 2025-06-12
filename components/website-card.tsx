@@ -14,13 +14,19 @@ import { DeleteConfirmDialog } from "@/components/delete-confirm-dialog"
 
 interface WebsiteCardProps {
   website: Website
+  isDropTarget?: boolean
+  onDragOver?: (e: React.DragEvent) => void
+  onDragLeave?: () => void
+  onDrop?: (e: React.DragEvent) => void
 }
 
-export function WebsiteCard({ website }: WebsiteCardProps) {
+export function WebsiteCard({ website, isDropTarget, onDragOver, onDragLeave, onDrop }: WebsiteCardProps) {
   const isAdminMode = useAdminStore((state) => state.isAdminMode)
   const { toggleWebsiteFeatured, toggleWebsiteHot } = useDataStore()
   const [isEditOpen, setIsEditOpen] = useState(false)
   const [isDeleteOpen, setIsDeleteOpen] = useState(false)
+  const [longPressTimer, setLongPressTimer] = useState<NodeJS.Timeout | null>(null)
+  const [isDragging, setIsDragging] = useState(false)
 
   const handleFeaturedClick = (e: React.MouseEvent) => {
     e.preventDefault()
@@ -47,20 +53,73 @@ export function WebsiteCard({ website }: WebsiteCardProps) {
   }
 
   const handleCardClick = (e: React.MouseEvent) => {
+    // 如果是管理模式且正在拖拽，不要跳转
+    if (isAdminMode && isDragging) {
+      e.preventDefault()
+      return
+    }
+    
     // 如果点击的是管理按钮，不要跳转
     const target = e.target as HTMLElement
     if (target.closest(".admin-button")) {
       e.preventDefault()
       return
     }
+    
+    // 如果是管理模式，不跳转（避免与拖拽冲突）
+    if (isAdminMode) {
+      e.preventDefault()
+      return
+    }
+    
     // 否则正常跳转
     window.open(website.url, "_blank", "noopener,noreferrer")
   }
 
   const handleDragStart = (e: React.DragEvent) => {
-    if (!isAdminMode) return
+    if (!isAdminMode) {
+      console.log("拖拽被阻止: 不在管理模式")
+      return
+    }
+    console.log("开始拖拽:", website.name, website.id)
     e.dataTransfer.setData("text/plain", website.id)
     e.dataTransfer.effectAllowed = "move"
+    setIsDragging(true)
+  }
+
+  const handleDragEnd = () => {
+    setIsDragging(false)
+  }
+
+  // 长按开始 - 支持移动端
+  const handleTouchStart = (e: React.TouchEvent) => {
+    if (!isAdminMode) return
+    
+    const timer = setTimeout(() => {
+      // 触发长按效果
+      const card = e.currentTarget as HTMLElement
+      card.style.transform = "scale(1.05)"
+      card.style.zIndex = "50"
+      card.style.opacity = "0.8"
+    }, 500) // 500ms长按触发
+    
+    setLongPressTimer(timer)
+  }
+
+  // 长按结束
+  const handleTouchEnd = () => {
+    if (longPressTimer) {
+      clearTimeout(longPressTimer)
+      setLongPressTimer(null)
+    }
+    
+    // 重置样式
+    const cards = document.querySelectorAll('.website-card')
+    cards.forEach((card) => {
+      ;(card as HTMLElement).style.transform = ""
+      ;(card as HTMLElement).style.zIndex = ""
+      ;(card as HTMLElement).style.opacity = ""
+    })
   }
 
   return (
@@ -68,13 +127,22 @@ export function WebsiteCard({ website }: WebsiteCardProps) {
       <Card
         className={cn(
           "website-card group relative overflow-hidden transition-all hover:shadow-md cursor-pointer",
-          isAdminMode && "cursor-move",
+          isAdminMode && "cursor-grab active:cursor-grabbing hover:scale-[1.02]",
+          isDragging && "opacity-50 scale-105 shadow-2xl",
+          isDropTarget && "ring-2 ring-blue-500 ring-opacity-50 bg-blue-50/50",
         )}
         draggable={isAdminMode}
         onDragStart={handleDragStart}
+        onDragEnd={handleDragEnd}
+        onDragOver={onDragOver}
+        onDragLeave={onDragLeave}
+        onDrop={onDrop}
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
         onClick={handleCardClick}
+        title={isAdminMode ? "拖拽以重新排序" : "点击访问网站"}
       >
-        <CardContent className="p-4">
+        <CardContent className="p-4" style={{ userSelect: isAdminMode ? 'none' : 'auto' }}>
           <div className="flex items-start gap-3">
             <div className="relative h-10 w-10 overflow-hidden rounded-md bg-muted">
               <Image

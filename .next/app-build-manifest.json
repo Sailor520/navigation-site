@@ -10,9 +10,7 @@
       "static/chunks/webpack.js",
       "static/chunks/vendors.js",
       "static/chunks/main-app.js",
-      "static/chunks/default-_app-pages-browser_components_ui_button_tsx-_app-pages-browser_components_ui_checkbox-d9f68e.js",
       "static/chunks/default-_app-pages-browser_components_website-card_tsx.js",
-      "static/chunks/default-_app-pages-browser_components_ui_alert_tsx-_app-pages-browser_lib_admin-auth-context_tsx.js",
       "static/css/app/layout.css",
       "static/chunks/app/layout.js"
     ],
@@ -38,23 +36,8 @@
       "static/chunks/webpack.js",
       "static/chunks/vendors.js",
       "static/chunks/main-app.js",
-      "static/chunks/default-_app-pages-browser_components_ui_button_tsx-_app-pages-browser_components_ui_checkbox-d9f68e.js",
       "static/chunks/default-_app-pages-browser_components_website-card_tsx.js",
       "static/chunks/app/page.js"
-    ],
-    "/admin/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/vendors.js",
-      "static/chunks/main-app.js",
-      "static/chunks/default-_app-pages-browser_components_ui_button_tsx-_app-pages-browser_components_ui_checkbox-d9f68e.js",
-      "static/chunks/default-_app-pages-browser_components_ui_alert_tsx-_app-pages-browser_lib_admin-auth-context_tsx.js",
-      "static/chunks/app/admin/page.js"
-    ],
-    "/api/metadata/route": [
-      "static/chunks/webpack.js",
-      "static/chunks/vendors.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/api/metadata/route.js"
     ]
   }
 }

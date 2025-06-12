@@ -25,6 +25,7 @@ interface DataState {
   updateWebsite: (websiteId: string, updates: Partial<Website>) => void
   deleteWebsite: (websiteId: string) => void
   reorderCategories: (categories: Category[]) => void
+  reorderWebsitesInCategory: (categoryId: string, websiteIds: string[]) => void
   toggleWebsiteFeatured: (websiteId: string) => void
   toggleWebsiteHot: (websiteId: string) => void
   moveWebsiteToCategory: (websiteId: string, categoryId: string) => void
@@ -92,6 +93,7 @@ const initialWebsites: Website[] = [
     createdAt: new Date(),
     isFeatured: false,
     isHot: false,
+    order: 0,
   },
   {
     id: "2",
@@ -103,6 +105,7 @@ const initialWebsites: Website[] = [
     createdAt: new Date(),
     isFeatured: false,
     isHot: false,
+    order: 1,
   },
   {
     id: "3",
@@ -114,6 +117,7 @@ const initialWebsites: Website[] = [
     createdAt: new Date(),
     isFeatured: false,
     isHot: false,
+    order: 0,
   },
   {
     id: "4",
@@ -125,6 +129,7 @@ const initialWebsites: Website[] = [
     createdAt: new Date(),
     isFeatured: false,
     isHot: false,
+    order: 0,
   },
   {
     id: "5",
@@ -136,6 +141,7 @@ const initialWebsites: Website[] = [
     createdAt: new Date(),
     isFeatured: false,
     isHot: false,
+    order: 1,
   },
   {
     id: "6",
@@ -147,6 +153,7 @@ const initialWebsites: Website[] = [
     createdAt: new Date(),
     isFeatured: false,
     isHot: false,
+    order: 0,
   },
   {
     id: "7",
@@ -158,6 +165,7 @@ const initialWebsites: Website[] = [
     createdAt: new Date(),
     isFeatured: false,
     isHot: false,
+    order: 1,
   },
   {
     id: "8",
@@ -169,6 +177,7 @@ const initialWebsites: Website[] = [
     createdAt: new Date(),
     isFeatured: false,
     isHot: false,
+    order: 1,
   },
 ]
 
@@ -196,6 +205,19 @@ export const useDataStore = create<DataState>()(
           websites: state.websites.filter((website) => website.id !== websiteId),
         })),
       reorderCategories: (categories) => set({ categories }),
+              reorderWebsitesInCategory: (categoryId, websiteIds) => {
+          console.log("执行重排序 - 分类ID:", categoryId, "网站ID数组:", websiteIds)
+          set((state) => ({
+            websites: state.websites.map((website) => {
+              const orderIndex = websiteIds.indexOf(website.id)
+              if (orderIndex !== -1 && website.categoryIds.includes(categoryId)) {
+                console.log(`更新网站 ${website.name} 的order为:`, orderIndex)
+                return { ...website, order: orderIndex }
+              }
+              return website
+            }),
+          }))
+        },
       toggleWebsiteFeatured: (websiteId) => {
         console.log("执行切换精品状态:", websiteId)
         set((state) => {

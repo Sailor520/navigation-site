@@ -8,6 +8,7 @@ export interface Website {
   createdAt: Date
   isFeatured?: boolean
   isHot?: boolean
+  order?: number // 添加排序字段
 }
 
 export interface Category {

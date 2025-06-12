@@ -1,0 +1,11 @@
+{
+  "/api/deployment-info/route": "/api/deployment-info",
+  "/api/metadata/route": "/api/metadata",
+  "/_not-found/page": "/_not-found",
+  "/admin/page": "/admin",
+  "/admin/settings/page": "/admin/settings",
+  "/page": "/",
+  "/contact/page": "/contact",
+  "/about/page": "/about",
+  "/terms/page": "/terms"
+}
