@@ -21,11 +21,16 @@ export async function GET(request: NextRequest) {
     const description =
       $('meta[name="description"]').attr("content") || $('meta[property="og:description"]').attr("content") || null
 
-    // 提取logo
+    // 提取logo - 扩展更多可能的logo来源
     let logo =
       $('link[rel="apple-touch-icon"]').attr("href") ||
       $('link[rel="icon"]').attr("href") ||
       $('link[rel="shortcut icon"]').attr("href") ||
+      $('link[rel="apple-touch-icon-precomposed"]').attr("href") ||
+      $('meta[property="og:image"]').attr("content") ||
+      $('link[rel="mask-icon"]').attr("href") ||
+      $('link[sizes="192x192"]').attr("href") ||
+      $('link[sizes="180x180"]').attr("href") ||
       null
 
     // 如果logo是相对路径，转换为绝对路径
@@ -34,6 +39,18 @@ export async function GET(request: NextRequest) {
       logo = logo.startsWith("/")
         ? `${urlObj.protocol}//${urlObj.host}${logo}`
         : `${urlObj.protocol}//${urlObj.host}/${logo}`
+    }
+
+    // 如果仍然没有找到logo，尝试通用的favicon路径
+    if (!logo) {
+      try {
+        const urlObj = new URL(url)
+        const faviconUrl = `${urlObj.protocol}//${urlObj.host}/favicon.ico`
+        // 简单检查favicon是否存在（不做实际请求，避免性能问题）
+        logo = faviconUrl
+      } catch (e) {
+        // URL解析失败，保持logo为null
+      }
     }
 
     return NextResponse.json({ title, description, logo })

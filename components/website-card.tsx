@@ -78,10 +78,16 @@ export function WebsiteCard({ website }: WebsiteCardProps) {
           <div className="flex items-start gap-3">
             <div className="relative h-10 w-10 overflow-hidden rounded-md bg-muted">
               <Image
-                src={website.logo || `/placeholder.svg?height=40&width=40&text=${website.name.charAt(0)}`}
+                src={website.logo || `https://ui-avatars.com/api/?name=${encodeURIComponent(website.name.charAt(0))}&background=e5e7eb&color=6b7280&size=40&format=svg`}
                 alt={website.name}
                 fill
                 className="object-contain"
+                onError={(e) => {
+                  const target = e.target as HTMLImageElement;
+                  if (target.src !== `https://ui-avatars.com/api/?name=${encodeURIComponent(website.name.charAt(0))}&background=e5e7eb&color=6b7280&size=40&format=svg`) {
+                    target.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(website.name.charAt(0))}&background=e5e7eb&color=6b7280&size=40&format=svg`;
+                  }
+                }}
               />
             </div>
             <div className="flex-1 space-y-1">
