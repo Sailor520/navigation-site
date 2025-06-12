@@ -239,6 +239,38 @@ export const useDataStore = create<DataState>()(
     }),
     {
       name: "navigation-data",
+      partialize: (state) => ({
+        categories: state.categories,
+        websites: state.websites,
+      }),
+      skipHydration: true,
+      // 增加merge函数，确保初始数据正确合并
+      merge: (persistedState, currentState) => {
+        // 如果没有持久化数据，使用当前状态（包含初始数据）
+        if (!persistedState) {
+          return currentState
+        }
+        
+        // 如果有持久化数据，合并状态
+        return {
+          ...currentState,
+          ...persistedState,
+        }
+      },
+      // 添加版本控制和错误处理
+      version: 1,
+      migrate: (persistedState: any, version: number) => {
+        if (version === 0) {
+          // 处理旧版本数据
+          return persistedState
+        }
+        return persistedState
+      },
     },
   ),
 )
+
+// 手动触发hydration
+if (typeof window !== 'undefined') {
+  useDataStore.persist.rehydrate()
+}

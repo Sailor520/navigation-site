@@ -10,24 +10,56 @@ export async function GET(request: NextRequest) {
   }
 
   try {
-    const response = await fetch(url, { next: { revalidate: 60 * 60 } })
+    const response = await fetch(url, { 
+      next: { revalidate: 60 * 60 },
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
+        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+        'Accept-Language': 'en-US,en;q=0.5',
+        'Accept-Encoding': 'gzip, deflate',
+        'Connection': 'keep-alive',
+        'Upgrade-Insecure-Requests': '1'
+      }
+    })
+    
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}: ${response.statusText}`)
+    }
+    
     const html = await response.text()
     const $ = cheerio.load(html)
 
-    // 提取标题
-    const title = $("title").text() || $('meta[property="og:title"]').attr("content") || null
+    // 提取标题 - 增强容错能力
+    let title = $("title").text().trim() || 
+                $('meta[property="og:title"]').attr("content")?.trim() || 
+                $('meta[name="title"]').attr("content")?.trim() ||
+                $('h1').first().text().trim() || 
+                null
+    
+    // 如果标题为空，尝试从URL推断
+    if (!title) {
+      const urlObj = new URL(url)
+      title = urlObj.hostname.replace('www.', '')
+    }
 
-    // 提取描述
-    const description =
-      $('meta[name="description"]').attr("content") || $('meta[property="og:description"]').attr("content") || null
+    // 提取描述 - 增强容错能力  
+    let description =
+      $('meta[name="description"]').attr("content")?.trim() || 
+      $('meta[property="og:description"]').attr("content")?.trim() || 
+      $('meta[name="twitter:description"]').attr("content")?.trim() ||
+      null
+    
+    // 如果描述为空，提供基础描述
+    if (!description) {
+      description = `${title || 'Website'} - 网站链接`
+    }
 
-    // 提取logo - 扩展更多可能的logo来源
+    // 提取logo - 优先使用真正的favicon，避免误用og:image
     let logo =
       $('link[rel="apple-touch-icon"]').attr("href") ||
       $('link[rel="icon"]').attr("href") ||
       $('link[rel="shortcut icon"]').attr("href") ||
       $('link[rel="apple-touch-icon-precomposed"]').attr("href") ||
-      $('meta[property="og:image"]').attr("content") ||
       $('link[rel="mask-icon"]').attr("href") ||
       $('link[sizes="192x192"]').attr("href") ||
       $('link[sizes="180x180"]').attr("href") ||

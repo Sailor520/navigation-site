@@ -1,1 +1,38 @@
-{"node":{"0011124f46053676f40f2505b6f634a84268a27c8e":{"workers":{"app/_not-found/page":{"moduleId":"75847","async":false},"app/admin/page":{"moduleId":"75847","async":false},"app/admin/settings/page":{"moduleId":"75847","async":false},"app/page":{"moduleId":"75847","async":false},"app/contact/page":{"moduleId":"75847","async":false},"app/about/page":{"moduleId":"75847","async":false},"app/terms/page":{"moduleId":"75847","async":false}},"layer":{"app/_not-found/page":"action-browser","app/admin/page":"action-browser","app/admin/settings/page":"action-browser","app/page":"action-browser","app/contact/page":"action-browser","app/about/page":"action-browser","app/terms/page":"action-browser"}},"60ef22b0349a050c0260f610bece6465e0688d83e1":{"workers":{"app/_not-found/page":{"moduleId":"75847","async":false},"app/admin/page":{"moduleId":"75847","async":false},"app/admin/settings/page":{"moduleId":"75847","async":false},"app/page":{"moduleId":"75847","async":false},"app/contact/page":{"moduleId":"75847","async":false},"app/about/page":{"moduleId":"75847","async":false},"app/terms/page":{"moduleId":"75847","async":false}},"layer":{"app/_not-found/page":"action-browser","app/admin/page":"action-browser","app/admin/settings/page":"action-browser","app/page":"action-browser","app/contact/page":"action-browser","app/about/page":"action-browser","app/terms/page":"action-browser"}}},"edge":{},"encryptionKey":"ywApvb1Ip2fFYTtWqMYJLKTC8xqb9OmCSbKOmfgXVEE="}
+{
+  "node": {
+    "0011124f46053676f40f2505b6f634a84268a27c8e": {
+      "workers": {
+        "app/page": {
+          "moduleId": "(action-browser)/./node_modules/.pnpm/next@15.2.4_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22%2FUsers%2Fsiauun%2FDesktop%2Fnavigation-site%2Flib%2Fadmin-auth-server.ts%22%2C%5B%7B%22id%22%3A%220011124f46053676f40f2505b6f634a84268a27c8e%22%2C%22exportedName%22%3A%22getAdminInfo%22%7D%2C%7B%22id%22%3A%2260ef22b0349a050c0260f610bece6465e0688d83e1%22%2C%22exportedName%22%3A%22verifyAdminCredentials%22%7D%5D%5D%5D&__client_imported__=true!",
+          "async": false
+        },
+        "app/admin/page": {
+          "moduleId": "(action-browser)/./node_modules/.pnpm/next@15.2.4_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22%2FUsers%2Fsiauun%2FDesktop%2Fnavigation-site%2Flib%2Fadmin-auth-server.ts%22%2C%5B%7B%22id%22%3A%220011124f46053676f40f2505b6f634a84268a27c8e%22%2C%22exportedName%22%3A%22getAdminInfo%22%7D%2C%7B%22id%22%3A%2260ef22b0349a050c0260f610bece6465e0688d83e1%22%2C%22exportedName%22%3A%22verifyAdminCredentials%22%7D%5D%5D%5D&__client_imported__=true!",
+          "async": false
+        }
+      },
+      "layer": {
+        "app/page": "action-browser",
+        "app/admin/page": "action-browser"
+      }
+    },
+    "60ef22b0349a050c0260f610bece6465e0688d83e1": {
+      "workers": {
+        "app/page": {
+          "moduleId": "(action-browser)/./node_modules/.pnpm/next@15.2.4_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22%2FUsers%2Fsiauun%2FDesktop%2Fnavigation-site%2Flib%2Fadmin-auth-server.ts%22%2C%5B%7B%22id%22%3A%220011124f46053676f40f2505b6f634a84268a27c8e%22%2C%22exportedName%22%3A%22getAdminInfo%22%7D%2C%7B%22id%22%3A%2260ef22b0349a050c0260f610bece6465e0688d83e1%22%2C%22exportedName%22%3A%22verifyAdminCredentials%22%7D%5D%5D%5D&__client_imported__=true!",
+          "async": false
+        },
+        "app/admin/page": {
+          "moduleId": "(action-browser)/./node_modules/.pnpm/next@15.2.4_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22%2FUsers%2Fsiauun%2FDesktop%2Fnavigation-site%2Flib%2Fadmin-auth-server.ts%22%2C%5B%7B%22id%22%3A%220011124f46053676f40f2505b6f634a84268a27c8e%22%2C%22exportedName%22%3A%22getAdminInfo%22%7D%2C%7B%22id%22%3A%2260ef22b0349a050c0260f610bece6465e0688d83e1%22%2C%22exportedName%22%3A%22verifyAdminCredentials%22%7D%5D%5D%5D&__client_imported__=true!",
+          "async": false
+        }
+      },
+      "layer": {
+        "app/page": "action-browser",
+        "app/admin/page": "action-browser"
+      }
+    }
+  },
+  "edge": {},
+  "encryptionKey": "ywApvb1Ip2fFYTtWqMYJLKTC8xqb9OmCSbKOmfgXVEE="
+}

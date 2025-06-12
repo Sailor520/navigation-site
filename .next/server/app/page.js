@@ -1,6 +1,86 @@
-(()=>{var e={};e.id=974,e.ids=[974],e.modules={2795:(e,s,t)=>{"use strict";t.d(s,{K:()=>n});var a=t(45781),r=t(13072);function n({children:e,fallback:s=null}){let[t,n]=(0,r.useState)(!1);return t?(0,a.jsx)(a.Fragment,{children:e}):(0,a.jsx)(a.Fragment,{children:s})}},3295:e=>{"use strict";e.exports=require("next/dist/server/app-render/after-task-async-storage.external.js")},10846:e=>{"use strict";e.exports=require("next/dist/compiled/next-server/app-page.runtime.prod.js")},19121:e=>{"use strict";e.exports=require("next/dist/server/app-render/action-async-storage.external.js")},29294:e=>{"use strict";e.exports=require("next/dist/server/app-render/work-async-storage.external.js")},33873:e=>{"use strict";e.exports=require("path")},39225:(e,s,t)=>{"use strict";t.r(s),t.d(s,{default:()=>a});let a=(0,t(51129).registerClientReference)(function(){throw Error("Attempted to call the default export of \"/Users/siauun/Desktop/navigation-site/app/page.tsx\" from the server, but it's on the client. It's not possible to invoke a client function from the server, it can only be rendered as a Component or passed to props of a Client Component.")},"/Users/siauun/Desktop/navigation-site/app/page.tsx","default")},48342:(e,s,t)=>{Promise.resolve().then(t.bind(t,74843))},63033:e=>{"use strict";e.exports=require("next/dist/server/app-render/work-unit-async-storage.external.js")},74843:(e,s,t)=>{"use strict";t.r(s),t.d(s,{default:()=>K});var a=t(45781),r=t(56699),n=t(2795),i=t(88617);function l({category:e,showAll:s=!1}){let t=(0,i.D$)(e=>e.getWebsitesByCategory);return(0,a.jsx)(n.K,{children:(0,a.jsx)(o,{category:e,showAll:s,getWebsitesByCategory:t})})}function o({category:e,showAll:s,getWebsitesByCategory:t}){let n=t(e.id);return 0===n.length?null:(0,a.jsxs)("section",{id:`category-${e.id}`,className:"space-y-4",children:[(0,a.jsx)("div",{className:"flex items-center justify-between",children:(0,a.jsxs)("h2",{className:"text-2xl font-bold tracking-tight",children:[e.name," (",n.length,")"]})}),(0,a.jsx)("div",{className:"grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6",children:n.map(e=>(0,a.jsx)(r.u,{website:e},e.id))})]})}var d=t(13072);function c(){(0,i.D$)(e=>e.getFeaturedWebsites);let[e,s]=(0,d.useState)([]),[t,n]=(0,d.useState)(!1);return t&&0!==e.length?(0,a.jsxs)("section",{className:"space-y-4",children:[(0,a.jsx)("div",{className:"flex items-center justify-between",children:(0,a.jsxs)("h2",{className:"text-2xl font-bold tracking-tight flex items-center gap-2",children:[(0,a.jsx)("span",{className:"text-blue-500",children:"⭐"}),"精品推荐 (",e.length,")"]})}),(0,a.jsx)("div",{className:"grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6",children:e.map(e=>(0,a.jsx)(r.u,{website:e},e.id))})]}):null}var u=t(73313),m=t(89509),x=t(57171),p=t(31723),g=t(13134),h=t(51963),f=t(62874),b=t(95758);let v=(0,t(22752).A)("Zap",[["path",{d:"M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z",key:"1xq2db"}]]);var j=t(14784),N=t(59173),y=t(95605),w=t(84289),k="Progress",[A,P]=(0,y.A)(k),[D,R]=A(k),_=d.forwardRef((e,s)=>{var t,r;let{__scopeProgress:n,value:i=null,max:l,getValueLabel:o=L,...d}=e;(l||0===l)&&!C(l)&&console.error((t=`${l}`,`Invalid prop \`max\` of value \`${t}\` supplied to \`Progress\`. Only numbers greater than 0 are valid max values. Defaulting to \`100\`.`));let c=C(l)?l:100;null===i||E(i,c)||console.error((r=`${i}`,`Invalid prop \`value\` of value \`${r}\` supplied to \`Progress\`. The \`value\` prop must be:
-  - a positive number
-  - less than the value passed to \`max\` (or 100 if no \`max\` prop is set)
-  - \`null\` or \`undefined\` if the progress is indeterminate.
+"use strict";
+/*
+ * ATTENTION: An "eval-source-map" devtool has been used.
+ * This devtool is neither made for production nor for readable output files.
+ * It uses "eval()" calls to create a separate source file with attached SourceMaps in the browser devtools.
+ * If you are trying to read the output file, select a different devtool (https://webpack.js.org/configuration/devtool/)
+ * or disable the default devtool with "devtool: false".
+ * If you are looking for production-ready output files, see mode: "production" (https://webpack.js.org/configuration/mode/).
+ */
+(() => {
+var exports = {};
+exports.id = "app/page";
+exports.ids = ["app/page"];
+exports.modules = {
 
-Defaulting to \`null\`.`));let u=E(i,c)?i:null,m=U(u)?o(u,c):void 0;return(0,a.jsx)(D,{scope:n,value:u,max:c,children:(0,a.jsx)(w.sG.div,{"aria-valuemax":c,"aria-valuemin":0,"aria-valuenow":U(u)?u:void 0,"aria-valuetext":m,role:"progressbar","data-state":q(u,c),"data-value":u??void 0,"data-max":c,...d,ref:s})})});_.displayName=k;var F="ProgressIndicator",$=d.forwardRef((e,s)=>{let{__scopeProgress:t,...r}=e,n=R(F,t);return(0,a.jsx)(w.sG.div,{"data-state":q(n.value,n.max),"data-value":n.value??void 0,"data-max":n.max,...r,ref:s})});function L(e,s){return`${Math.round(e/s*100)}%`}function q(e,s){return null==e?"indeterminate":e===s?"complete":"loading"}function U(e){return"number"==typeof e}function C(e){return U(e)&&!isNaN(e)&&e>0}function E(e,s){return U(e)&&!isNaN(e)&&e<=s&&e>=0}$.displayName=F;var V=t(77401);let G=d.forwardRef(({className:e,value:s,...t},r)=>(0,a.jsx)(_,{ref:r,className:(0,V.cn)("relative h-4 w-full overflow-hidden rounded-full bg-secondary",e),...t,children:(0,a.jsx)($,{className:"h-full w-full flex-1 bg-primary transition-all",style:{transform:`translateX(-${100-(s||0)}%)`}})}));function M(){let{theme:e}=(0,u.D)(),s=(()=>{switch(e){case"warm-beige":return{name:"暖米色防蓝光模式",description:"温暖的米黄色背景，有效过滤有害蓝光，减少眼部疲劳",icon:(0,a.jsx)(m.A,{className:"h-5 w-5 text-amber-600"}),benefits:["减少眼部疲劳","温暖舒适","适合长时间使用","过滤30%蓝光"],blueFilterLevel:30,timeRecommendation:"全天候使用",badge:"防蓝光",badgeVariant:"secondary"};case"eye-green":return{name:"护眼绿防蓝光模式",description:"专业护眼绿色调，模拟自然环境，科学配比减少视觉疲劳",icon:(0,a.jsx)(m.A,{className:"h-5 w-5 text-green-600"}),benefits:["缓解视觉疲劳","模拟自然环境","保护视力","过滤35%蓝光"],blueFilterLevel:35,timeRecommendation:"办公学习推荐",badge:"专业护眼",badgeVariant:"outline"};case"warm-orange":return{name:"暖橙防蓝光模式",description:"强效防蓝光橙色调，大幅减少蓝光辐射，营造温馨环境",icon:(0,a.jsx)(m.A,{className:"h-5 w-5 text-orange-600"}),benefits:["强效防蓝光","温馨舒适","减少蓝光辐射","过滤45%蓝光"],blueFilterLevel:45,timeRecommendation:"晚间使用推荐",badge:"强效护眼",badgeVariant:"secondary"};case"strong-blue-filter":return{name:"强力防蓝光模式",description:"最强防蓝光保护，专为夜间使用设计，最大程度减少蓝光伤害",icon:(0,a.jsx)(x.A,{className:"h-5 w-5 text-red-600"}),benefits:["最强防护","夜间专用","深度过滤","过滤60%蓝光"],blueFilterLevel:60,timeRecommendation:"夜间专用模式",badge:"最强防护",badgeVariant:"destructive"};case"dark":return{name:"深色模式",description:"深色背景，适合夜间使用，减少屏幕亮度对眼睛的刺激",icon:(0,a.jsx)(p.A,{className:"h-5 w-5"}),benefits:["夜间友好","省电模式","减少眩光","降低亮度"],blueFilterLevel:0,timeRecommendation:"夜间使用",badge:"夜间模式",badgeVariant:"outline"};case"light":return{name:"浅色模式",description:"经典的白色主题，清爽明亮，适合白天使用",icon:(0,a.jsx)(g.A,{className:"h-5 w-5"}),benefits:["清爽明亮","经典设计","高对比度","白天推荐"],blueFilterLevel:0,timeRecommendation:"白天使用",badge:"经典模式",badgeVariant:"outline"};default:return{name:"跟随系统",description:"自动跟随操作系统的主题设置，智能适配环境",icon:(0,a.jsx)(h.A,{className:"h-5 w-5"}),benefits:["自动切换","系统一致","智能适配","便捷省心"],blueFilterLevel:0,timeRecommendation:"智能切换",badge:"智能模式",badgeVariant:"outline"}}})(),t=s.blueFilterLevel>0;return(0,a.jsxs)(j.Zp,{className:"w-full max-w-md",children:[(0,a.jsxs)(j.aR,{children:[(0,a.jsxs)(j.ZB,{className:"flex items-center gap-2",children:[s.icon,(0,a.jsx)("span",{children:"当前主题"}),(0,a.jsx)(N.E,{variant:s.badgeVariant,children:s.badge})]}),(0,a.jsx)(j.BT,{children:s.name})]}),(0,a.jsxs)(j.Wu,{className:"space-y-4",children:[(0,a.jsx)("p",{className:"text-sm text-muted-foreground",children:s.description}),t&&(0,a.jsxs)("div",{className:"space-y-2",children:[(0,a.jsxs)("div",{className:"flex items-center justify-between",children:[(0,a.jsxs)("span",{className:"text-sm font-medium flex items-center gap-1",children:[(0,a.jsx)(x.A,{className:"h-3 w-3"}),"蓝光过滤等级"]}),(0,a.jsxs)("span",{className:"text-sm font-bold text-blue-600",children:[s.blueFilterLevel,"%"]})]}),(0,a.jsx)(G,{value:s.blueFilterLevel,className:"h-2"})]}),(0,a.jsxs)("div",{className:"flex items-center gap-2 p-2 bg-muted rounded-md",children:[(0,a.jsx)(f.A,{className:"h-4 w-4 text-muted-foreground"}),(0,a.jsxs)("span",{className:"text-sm",children:["推荐使用时间：",s.timeRecommendation]})]}),(0,a.jsxs)("div",{className:"space-y-2",children:[(0,a.jsxs)("h4",{className:"text-sm font-medium flex items-center gap-1",children:[(0,a.jsx)(b.A,{className:"h-3 w-3"}),"主要特点："]}),(0,a.jsx)("ul",{className:"space-y-1",children:s.benefits.map((e,s)=>(0,a.jsxs)("li",{className:"flex items-center gap-2 text-sm text-muted-foreground",children:[(0,a.jsx)("span",{className:"h-1 w-1 rounded-full bg-current"}),e]},s))})]}),t&&(0,a.jsxs)("div",{className:"p-3 bg-orange-50 dark:bg-orange-950 rounded-md border border-orange-200 dark:border-orange-800",children:[(0,a.jsxs)("div",{className:"flex items-center gap-2 text-orange-700 dark:text-orange-300",children:[(0,a.jsx)(v,{className:"h-4 w-4"}),(0,a.jsx)("span",{className:"text-sm font-medium",children:"防蓝光保护已激活"})]}),(0,a.jsx)("p",{className:"text-xs text-orange-600 dark:text-orange-400 mt-1",children:"正在有效过滤有害蓝光，保护您的眼睛健康"})]})]})]})}function K(){let[e,s]=(0,d.useState)(!1);return e?(0,a.jsx)(S,{}):(0,a.jsx)("div",{className:"space-y-10",children:(0,a.jsx)("section",{className:"space-y-6",children:(0,a.jsx)("div",{className:"flex items-center justify-between",children:(0,a.jsxs)("div",{children:[(0,a.jsx)("h1",{className:"text-3xl font-bold tracking-tight",children:"网站导航"}),(0,a.jsx)("p",{className:"text-muted-foreground",children:"发现并访问精选的优质网站资源，按分类整理便于查找"})]})})})})}function S(){let e=(0,i.D$)(e=>e.categories);(0,i.D$)(e=>e.websites);let s=(0,i.gb)(e=>e.isAdminMode),{theme:t}=(0,u.D)(),[r,o]=(0,d.useState)(!1);return(0,a.jsxs)("div",{className:"space-y-10",children:[(0,a.jsx)("section",{className:"space-y-6",children:(0,a.jsxs)("div",{className:"flex items-center justify-between",children:[(0,a.jsxs)("div",{children:[(0,a.jsx)("h1",{className:"text-3xl font-bold tracking-tight",children:"网站导航"}),(0,a.jsx)("p",{className:"text-muted-foreground",children:"发现并访问精选的优质网站资源，按分类整理便于查找"}),(0,a.jsx)(n.K,{children:("warm-beige"===t||"eye-green"===t||"warm-orange"===t)&&(0,a.jsxs)("p",{className:"mt-2 text-sm text-muted-foreground flex items-center gap-2",children:[(0,a.jsx)("span",{className:"h-2 w-2 rounded-full bg-green-500"}),"当前使用护眼模式，有效减少眼部疲劳"]})})]}),(0,a.jsx)("div",{className:"flex items-center gap-4",children:(0,a.jsxs)(n.K,{children:[r&&(0,a.jsx)(M,{}),s&&(0,a.jsx)("div",{className:"rounded-lg bg-blue-50 px-3 py-2 text-sm text-blue-700 dark:bg-blue-950 dark:text-blue-300",children:"\uD83D\uDEE1️ 管理员模式：点击网站卡片下方的按钮来设置精品和热门标识"})]})})]})}),(0,a.jsx)(c,{}),(0,a.jsx)("div",{className:"space-y-10",children:e.map(e=>(0,a.jsx)(l,{category:e,showAll:!0},e.id))})]})}G.displayName=_.displayName},85294:(e,s,t)=>{Promise.resolve().then(t.bind(t,39225))},96331:(e,s,t)=>{"use strict";t.r(s),t.d(s,{GlobalError:()=>n.default,__next_app__:()=>c,pages:()=>d,routeModule:()=>u,tree:()=>o});var a=t(7025),r=t(18198),n=t(73928),i=t(45239),l={};for(let e in i)0>["default","tree","pages","GlobalError","__next_app__","routeModule"].indexOf(e)&&(l[e]=()=>i[e]);t.d(s,l);let o=["",{children:["__PAGE__",{},{page:[()=>Promise.resolve().then(t.bind(t,39225)),"/Users/siauun/Desktop/navigation-site/app/page.tsx"]}]},{layout:[()=>Promise.resolve().then(t.bind(t,87439)),"/Users/siauun/Desktop/navigation-site/app/layout.tsx"],error:[()=>Promise.resolve().then(t.bind(t,87452)),"/Users/siauun/Desktop/navigation-site/app/error.tsx"],loading:[()=>Promise.resolve().then(t.bind(t,34314)),"/Users/siauun/Desktop/navigation-site/app/loading.tsx"],"global-error":[()=>Promise.resolve().then(t.bind(t,73928)),"/Users/siauun/Desktop/navigation-site/app/global-error.tsx"],"not-found":[()=>Promise.resolve().then(t.bind(t,87442)),"/Users/siauun/Desktop/navigation-site/app/not-found.tsx"],forbidden:[()=>Promise.resolve().then(t.t.bind(t,53117,23)),"next/dist/client/components/forbidden-error"],unauthorized:[()=>Promise.resolve().then(t.t.bind(t,6874,23)),"next/dist/client/components/unauthorized-error"]}],d=["/Users/siauun/Desktop/navigation-site/app/page.tsx"],c={require:t,loadChunk:()=>Promise.resolve()},u=new a.AppPageRouteModule({definition:{kind:r.RouteKind.APP_PAGE,page:"/page",pathname:"/",bundlePath:"",filename:"",appPaths:[]},userland:{loaderTree:o}})}};var s=require("../webpack-runtime.js");s.C(e);var t=e=>s(s.s=e),a=s.X(0,[915,760,903],()=>t(96331));module.exports=a})();
+/***/ "../app-render/action-async-storage.external":
+/*!*******************************************************************************!*\
+  !*** external "next/dist/server/app-render/action-async-storage.external.js" ***!
+  \*******************************************************************************/
+/***/ ((module) => {
+
+module.exports = require("next/dist/server/app-render/action-async-storage.external.js");
+
+/***/ }),
+
+/***/ "../app-render/after-task-async-storage.external":
+/*!***********************************************************************************!*\
+  !*** external "next/dist/server/app-render/after-task-async-storage.external.js" ***!
+  \***********************************************************************************/
+/***/ ((module) => {
+
+module.exports = require("next/dist/server/app-render/after-task-async-storage.external.js");
+
+/***/ }),
+
+/***/ "../app-render/work-async-storage.external":
+/*!*****************************************************************************!*\
+  !*** external "next/dist/server/app-render/work-async-storage.external.js" ***!
+  \*****************************************************************************/
+/***/ ((module) => {
+
+module.exports = require("next/dist/server/app-render/work-async-storage.external.js");
+
+/***/ }),
+
+/***/ "./work-unit-async-storage.external":
+/*!**********************************************************************************!*\
+  !*** external "next/dist/server/app-render/work-unit-async-storage.external.js" ***!
+  \**********************************************************************************/
+/***/ ((module) => {
+
+module.exports = require("next/dist/server/app-render/work-unit-async-storage.external.js");
+
+/***/ }),
+
+/***/ "next/dist/compiled/next-server/app-page.runtime.dev.js":
+/*!*************************************************************************!*\
+  !*** external "next/dist/compiled/next-server/app-page.runtime.dev.js" ***!
+  \*************************************************************************/
+/***/ ((module) => {
+
+module.exports = require("next/dist/compiled/next-server/app-page.runtime.dev.js");
+
+/***/ }),
+
+/***/ "path":
+/*!***********************!*\
+  !*** external "path" ***!
+  \***********************/
+/***/ ((module) => {
+
+module.exports = require("path");
+
+/***/ })
+
+};
+;
+
+// load runtime
+var __webpack_require__ = require("../webpack-runtime.js");
+__webpack_require__.C(exports);
+var __webpack_exec__ = (moduleId) => (__webpack_require__(__webpack_require__.s = moduleId))
+var __webpack_exports__ = __webpack_require__.X(0, ["vendors","default-_action-browser_node_modules_pnpm_next_15_2_4_react-dom_19_1_0_react_19_1_0__react_19-202f2c","default-_rsc_node_modules_pnpm_next_15_2_4_react-dom_19_1_0_react_19_1_0__react_19_1_0_node_m-c1816d"], () => (__webpack_exec__("(rsc)/./node_modules/.pnpm/next@15.2.4_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/build/webpack/loaders/next-app-loader/index.js?name=app%2Fpage&page=%2Fpage&appPaths=%2Fpage&pagePath=private-next-app-dir%2Fpage.tsx&appDir=%2FUsers%2Fsiauun%2FDesktop%2Fnavigation-site%2Fapp&pageExtensions=tsx&pageExtensions=ts&pageExtensions=jsx&pageExtensions=js&rootDir=%2FUsers%2Fsiauun%2FDesktop%2Fnavigation-site&isDev=true&tsconfigPath=tsconfig.json&basePath=&assetPrefix=&nextConfigOutput=&preferredRegion=&middlewareConfig=e30%3D!")));
+module.exports = __webpack_exports__;
+
+})();

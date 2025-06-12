@@ -12,7 +12,7 @@ import { useDataStore } from "@/lib/store"
 import { useAdminAuth } from "@/lib/admin-auth-context"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { AlertCircle } from "lucide-react"
-import { AdminSafeWrapper } from "@/components/admin-safe-wrapper"
+
 
 export default function AdminPage() {
   const categories = useDataStore((state) => state.categories)
@@ -78,44 +78,42 @@ export default function AdminPage() {
   }
 
   return (
-    <AdminSafeWrapper>
-      <div className="space-y-10">
-        <section className="flex items-center justify-between">
+    <div className="space-y-10">
+      <section className="flex items-center justify-between">
+        <div className="space-y-2">
+          <h1 className="text-3xl font-bold tracking-tight">管理员控制台</h1>
+          <p className="text-muted-foreground">管理网站和分类，系统将自动抓取网站信息</p>
+        </div>
+        <Button asChild variant="outline">
+          <Link href="/admin/settings">
+            <Settings className="mr-2 h-4 w-4" />
+            管理员设置
+          </Link>
+        </Button>
+      </section>
+
+      <Tabs defaultValue="website" className="space-y-6">
+        <TabsList>
+          <TabsTrigger value="website">添加网站</TabsTrigger>
+          <TabsTrigger value="category">创建分类</TabsTrigger>
+        </TabsList>
+
+        <TabsContent value="website" className="space-y-6">
           <div className="space-y-2">
-            <h1 className="text-3xl font-bold tracking-tight">管理员控制台</h1>
-            <p className="text-muted-foreground">管理网站和分类，系统将自动抓取网站信息</p>
+            <h2 className="text-xl font-semibold">添加新网站</h2>
+            <p className="text-sm text-muted-foreground">添加网站到导航，系统将自动抓取网站信息</p>
           </div>
-          <Button asChild variant="outline">
-            <Link href="/admin/settings">
-              <Settings className="mr-2 h-4 w-4" />
-              管理员设置
-            </Link>
-          </Button>
-        </section>
+          <WebsiteForm categories={categories} />
+        </TabsContent>
 
-        <Tabs defaultValue="website" className="space-y-6">
-          <TabsList>
-            <TabsTrigger value="website">添加网站</TabsTrigger>
-            <TabsTrigger value="category">创建分类</TabsTrigger>
-          </TabsList>
-
-          <TabsContent value="website" className="space-y-6">
-            <div className="space-y-2">
-              <h2 className="text-xl font-semibold">添加新网站</h2>
-              <p className="text-sm text-muted-foreground">添加网站到导航，系统将自动抓取网站信息</p>
-            </div>
-            <WebsiteForm categories={categories} />
-          </TabsContent>
-
-          <TabsContent value="category" className="space-y-6">
-            <div className="space-y-2">
-              <h2 className="text-xl font-semibold">创建新分类</h2>
-              <p className="text-sm text-muted-foreground">创建新的网站分类来组织网站</p>
-            </div>
-            <CategoryForm />
-          </TabsContent>
-        </Tabs>
-      </div>
-    </AdminSafeWrapper>
+        <TabsContent value="category" className="space-y-6">
+          <div className="space-y-2">
+            <h2 className="text-xl font-semibold">创建新分类</h2>
+            <p className="text-sm text-muted-foreground">创建新的网站分类来组织网站</p>
+          </div>
+          <CategoryForm />
+        </TabsContent>
+      </Tabs>
+    </div>
   )
 }

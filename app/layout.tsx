@@ -13,6 +13,7 @@ import { ErrorBoundary } from "@/components/error-boundary"
 import { ChunkErrorBoundary } from "@/components/chunk-error-boundary"
 import { GlobalErrorHandler } from "@/app/global-error-handler"
 import { ExtensionWarning } from "@/components/extension-warning"
+import { HydrationProvider } from "@/components/hydration-provider"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -120,18 +121,20 @@ export default function RootLayout({
             themes={["light", "dark", "system", "warm-beige", "eye-green", "warm-orange", "strong-blue-filter"]}
           >
             <AuthProvider>
-              <div className="flex min-h-screen flex-col">
-                <Header />
-                <div className="flex flex-1 overflow-hidden">
-                  <Sidebar />
-                  <main className="flex-1 overflow-auto p-4 md:p-6 transition-all duration-300">{children}</main>
+              <HydrationProvider>
+                <div className="flex min-h-screen flex-col">
+                  <Header />
+                  <div className="flex flex-1 overflow-hidden">
+                    <Sidebar />
+                    <main className="flex-1 overflow-auto p-4 md:p-6 transition-all duration-300">{children}</main>
+                  </div>
+                  <Footer />
                 </div>
-                <Footer />
-              </div>
-              <BlueLightIndicator />
-              <Toaster />
-              <GlobalErrorHandler />
-              <ExtensionWarning />
+                <BlueLightIndicator />
+                <Toaster />
+                <GlobalErrorHandler />
+                <ExtensionWarning />
+              </HydrationProvider>
             </AuthProvider>
           </ThemeProvider>
         </ErrorBoundary>

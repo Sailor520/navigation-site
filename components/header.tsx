@@ -29,8 +29,8 @@ export default function Header() {
   return (
     <>
       <header className="sticky top-0 z-40 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 transition-colors">
-        <div className="container flex h-16 items-center justify-between px-4 md:px-6">
-          <div className="flex items-center gap-2">
+        <div className="container flex h-16 items-center px-4 md:px-6">
+          <div className="flex items-center gap-2 flex-shrink-0">
             {/* 移动端菜单按钮 */}
             <Button variant="ghost" size="icon" onClick={toggleSidebar} className="md:hidden">
               <Menu className="h-5 w-5" />
@@ -41,12 +41,12 @@ export default function Header() {
             </Link>
           </div>
 
-          {/* 搜索栏 */}
-          <div className="hidden md:block">
+          {/* 搜索栏 - 居中显示 */}
+          <div className="hidden md:flex flex-1 justify-center max-w-md mx-auto">
             <SearchBar />
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 flex-shrink-0 md:ml-auto md:mr-12">
             {isMounted && isAuthenticated ? (
               <>
                 <AdminToggle />

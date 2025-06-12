@@ -1,29 +1,28 @@
 "use client"
 
 import { WebsiteCard } from "@/components/website-card"
-import { useDataStore } from "@/lib/store"
-import { useState, useEffect } from "react"
+import { useHydratedStore } from "@/lib/use-hydrated-store"
 
 export function FeaturedSection() {
-  const getFeaturedWebsites = useDataStore((state) => state.getFeaturedWebsites)
-  const [featuredWebsites, setFeaturedWebsites] = useState<any[]>([])
-  const [isMounted, setIsMounted] = useState(false)
+  const { isHydrated, websites } = useHydratedStore()
 
-  // 确保组件已挂载，避免hydration错误
-  useEffect(() => {
-    setIsMounted(true)
-  }, [])
+  // 获取精品网站
+  const featuredWebsites = websites.filter(website => website.isFeatured)
 
-  // 在客户端挂载后获取数据
-  useEffect(() => {
-    if (isMounted) {
-      setFeaturedWebsites(getFeaturedWebsites())
-    }
-  }, [getFeaturedWebsites, isMounted])
-
-  // 服务器端渲染时不显示内容，避免hydration不匹配
-  if (!isMounted) {
-    return null
+  // 在hydration完成之前，不显示内容
+  if (!isHydrated) {
+    return (
+      <section className="space-y-4">
+        <div className="flex items-center justify-between">
+          <div className="h-8 w-48 bg-muted animate-pulse rounded" />
+        </div>
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6">
+          {[1, 2, 3].map((index) => (
+            <div key={index} className="h-24 bg-muted animate-pulse rounded-lg" />
+          ))}
+        </div>
+      </section>
+    )
   }
 
   if (featuredWebsites.length === 0) {

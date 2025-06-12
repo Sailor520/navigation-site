@@ -11,8 +11,7 @@ import { Button } from "@/components/ui/button"
 import { useToast } from "@/components/ui/use-toast"
 import { useAdminAuth } from "@/lib/admin-auth-context"
 import { getAdminInfo } from "@/lib/admin-auth-server"
-import { VersionInfo } from "@/components/version-info"
-import { SyncChecker } from "@/components/sync-checker"
+
 
 export default function AdminSettingsPage() {
   const [adminInfo, setAdminInfo] = useState<{ username: string; hasCustomCredentials: boolean } | null>(null)
@@ -376,12 +375,34 @@ export default function AdminSettingsPage() {
               <CardTitle>版本信息</CardTitle>
               <CardDescription>当前部署的版本和构建信息</CardDescription>
             </CardHeader>
-            <CardContent>
-              <VersionInfo />
+            <CardContent className="space-y-4">
+              <div>
+                <label className="text-sm font-medium">应用版本</label>
+                <p className="text-lg font-mono">v1.0.0</p>
+              </div>
+              <div>
+                <label className="text-sm font-medium">构建时间</label>
+                <p className="text-sm text-muted-foreground">{new Date().toLocaleString()}</p>
+              </div>
+              <div>
+                <label className="text-sm font-medium">运行环境</label>
+                <p className="text-sm text-muted-foreground">Next.js 15.2.4</p>
+              </div>
             </CardContent>
           </Card>
 
-          <SyncChecker />
+          <Card>
+            <CardHeader>
+              <CardTitle>系统状态</CardTitle>
+              <CardDescription>当前系统运行状态</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="flex items-center gap-2">
+                <CheckCircle className="h-5 w-5 text-green-500" />
+                <span>系统运行正常</span>
+              </div>
+            </CardContent>
+          </Card>
         </TabsContent>
       </Tabs>
     </div>

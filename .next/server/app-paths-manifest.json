@@ -1,12 +1,5 @@
 {
-  "/api/categories/route": "app/api/categories/route.js",
-  "/api/deployment-info/route": "app/api/deployment-info/route.js",
   "/api/metadata/route": "app/api/metadata/route.js",
-  "/_not-found/page": "app/_not-found/page.js",
-  "/admin/page": "app/admin/page.js",
-  "/admin/settings/page": "app/admin/settings/page.js",
   "/page": "app/page.js",
-  "/contact/page": "app/contact/page.js",
-  "/about/page": "app/about/page.js",
-  "/terms/page": "app/terms/page.js"
+  "/admin/page": "app/admin/page.js"
 }
