@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
-import { Settings } from "lucide-react"
+import { Settings, Shield } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { WebsiteForm } from "@/components/website-form"
@@ -84,12 +84,20 @@ export default function AdminPage() {
           <h1 className="text-3xl font-bold tracking-tight">管理员控制台</h1>
           <p className="text-muted-foreground">管理网站和分类，系统将自动抓取网站信息</p>
         </div>
-        <Button asChild variant="outline">
-          <Link href="/admin/settings">
-            <Settings className="mr-2 h-4 w-4" />
-            管理员设置
-          </Link>
-        </Button>
+        <div className="flex gap-2">
+          <Button asChild variant="outline">
+            <Link href="/admin/backup">
+              <Shield className="mr-2 h-4 w-4" />
+              数据备份
+            </Link>
+          </Button>
+          <Button asChild variant="outline">
+            <Link href="/admin/settings">
+              <Settings className="mr-2 h-4 w-4" />
+              管理员设置
+            </Link>
+          </Button>
+        </div>
       </section>
 
       <Tabs defaultValue="website" className="space-y-6">

@@ -11,27 +11,28 @@ export function useHydratedStore() {
   const websites = useDataStore((state) => state.websites)
 
   useEffect(() => {
-    // 检查是否有数据
-    if (categories.length > 0) {
-      setIsHydrated(true)
-      return
-    }
-
+    console.log('useHydratedStore Effect - categories.length:', categories.length, 'websites.length:', websites.length)
+    
     // 监听hydration完成
     const unsubFinishHydration = useDataStore.persist.onFinishHydration(() => {
+      console.log('Hydration完成')
       setIsHydrated(true)
     })
 
-    // 超时保护
+    // 手动触发rehydrate确保数据加载
+    useDataStore.persist.rehydrate()
+
+    // 超时保护 - 无论是否有数据都要设置为已hydration
     const timeoutId = setTimeout(() => {
+      console.log('Hydration超时，强制设置为已完成')
       setIsHydrated(true)
-    }, 1000)
+    }, 2000)
 
     return () => {
       unsubFinishHydration()
       clearTimeout(timeoutId)
     }
-  }, [categories.length])
+  }, [])
 
   return {
     isHydrated,

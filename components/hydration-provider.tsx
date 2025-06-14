@@ -2,6 +2,7 @@
 
 import { useEffect, useState, type ReactNode } from "react"
 import { useDataStore } from "@/lib/store"
+import { initAutoBackup, setupBackupOnUnload } from "@/lib/auto-backup"
 
 interface HydrationProviderProps {
   children: ReactNode
@@ -60,6 +61,15 @@ export function HydrationProvider({ children }: HydrationProviderProps) {
       clearTimeout(timeoutId)
     }
   }, [])
+
+  // 在组件挂载后初始化自动备份
+  useEffect(() => {
+    if (isReady) {
+      console.log('🛡️ 初始化自动备份系统')
+      initAutoBackup()
+      setupBackupOnUnload()
+    }
+  }, [isReady])
 
   // 在ready之前显示加载状态
   if (!isReady) {

@@ -40,6 +40,12 @@
       "namedRegex": "^/admin(?:/)?$"
     },
     {
+      "page": "/admin/backup",
+      "regex": "^/admin/backup(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/admin/backup(?:/)?$"
+    },
+    {
       "page": "/admin/settings",
       "regex": "^/admin/settings(?:/)?$",
       "routeKeys": {},

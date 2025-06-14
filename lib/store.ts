@@ -184,8 +184,8 @@ const initialWebsites: Website[] = [
 export const useDataStore = create<DataState>()(
   persist(
     (set, get) => ({
-      categories: initialCategories,
-      websites: initialWebsites,
+      categories: [],  // 初始化为空，由hydration时决定
+      websites: [],    // 初始化为空，由hydration时决定
       setCategories: (categories) => set({ categories }),
       setWebsites: (websites) => set({ websites }),
       addCategory: (category) =>
@@ -266,25 +266,73 @@ export const useDataStore = create<DataState>()(
         websites: state.websites,
       }),
       skipHydration: true,
-      // 增加merge函数，确保初始数据正确合并
-      merge: (persistedState, currentState) => {
-        // 如果没有持久化数据，使用当前状态（包含初始数据）
-        if (!persistedState) {
-          return currentState
+      // 强化merge函数，绝对确保管理员数据不被覆盖
+      merge: (persistedState: any, currentState: any) => {
+        console.log('🔄 merge函数被调用')
+        console.log('📥 persistedState:', persistedState)
+        console.log('🔧 currentState keys:', Object.keys(currentState))
+        
+        // 如果没有持久化数据，使用初始数据
+        if (!persistedState || typeof persistedState !== 'object') {
+          console.log('❌ 没有持久化数据，使用初始数据')
+          console.log('📊 初始数据统计 - categories:', initialCategories.length, 'websites:', initialWebsites.length)
+          return {
+            ...currentState,
+            categories: initialCategories,
+            websites: initialWebsites,
+          }
         }
         
-        // 如果有持久化数据，合并状态
+        // 检查持久化数据的完整性和有效性
+        const hasPersistedCategories = persistedState.categories && 
+          Array.isArray(persistedState.categories) && 
+          persistedState.categories.length > 0
+        
+        const hasPersistedWebsites = persistedState.websites && 
+          Array.isArray(persistedState.websites) && 
+          persistedState.websites.length > 0
+        
+        console.log('🔍 数据检查结果:')
+        console.log('  - 有持久化分类:', hasPersistedCategories, '数量:', persistedState.categories?.length || 0)
+        console.log('  - 有持久化网站:', hasPersistedWebsites, '数量:', persistedState.websites?.length || 0)
+        
+        // 如果有任何持久化的用户数据，优先保护用户数据
+        if (hasPersistedCategories || hasPersistedWebsites) {
+          console.log('✅ 检测到用户数据，优先使用持久化数据')
+          console.log('🛡️ 保护用户数据 - categories:', persistedState.categories?.length, 'websites:', persistedState.websites?.length)
+          
+          // 创建安全的合并结果
+          const safeResult = {
+            ...currentState,
+            categories: hasPersistedCategories ? persistedState.categories : initialCategories,
+            websites: hasPersistedWebsites ? persistedState.websites : initialWebsites,
+          }
+          
+          console.log('📤 merge结果 - categories:', safeResult.categories.length, 'websites:', safeResult.websites.length)
+          return safeResult
+        }
+        
+        // 如果持久化数据存在但为空，使用初始数据
+        console.log('⚠️ 持久化数据为空，使用初始数据')
         return {
           ...currentState,
-          ...persistedState,
+          categories: initialCategories,
+          websites: initialWebsites,
         }
       },
       // 添加版本控制和错误处理
-      version: 1,
+      version: 2,
       migrate: (persistedState: any, version: number) => {
-        if (version === 0) {
-          // 处理旧版本数据
-          return persistedState
+        console.log('migrate函数被调用 - version:', version, 'persistedState:', persistedState)
+        
+        if (version === 0 || version === 1) {
+          // 处理旧版本数据，确保数据结构正确
+          if (persistedState && typeof persistedState === 'object') {
+            return {
+              categories: persistedState.categories || [],
+              websites: persistedState.websites || [],
+            }
+          }
         }
         return persistedState
       },
