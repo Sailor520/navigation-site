@@ -1,0 +1,750 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+
+/* 强制禁用所有下拉菜单动画效果 - 最简单的点击下拉 */
+[data-radix-dropdown-menu-content],
+[data-radix-dropdown-menu-sub-content] {
+  animation: none !important;
+  transition: none !important;
+  transform: none !important;
+  opacity: 1 !important;
+}
+
+/* 禁用所有可能的下拉菜单动画类 */
+[data-radix-dropdown-menu-content].animate-in,
+[data-radix-dropdown-menu-content].animate-out,
+[data-radix-dropdown-menu-content][data-state="open"],
+[data-radix-dropdown-menu-content][data-state="closed"],
+[data-radix-dropdown-menu-sub-content].animate-in,
+[data-radix-dropdown-menu-sub-content].animate-out,
+[data-radix-dropdown-menu-sub-content][data-state="open"],
+[data-radix-dropdown-menu-sub-content][data-state="closed"] {
+  animation: none !important;
+  transition: none !important;
+  transform: none !important;
+  opacity: 1 !important;
+}
+
+@layer base {
+  :root {
+    --background: 0 0% 98%; /* 更偏灰色的背景 */
+    --foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --primary: 222.2 47.4% 11.2%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 210 40% 96%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+    --muted: 210 40% 94%; /* 更偏灰色的muted背景 */
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 210 40% 96%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 222.2 84% 4.9%;
+    --radius: 0.5rem;
+    --chart-1: 12 76% 61%;
+    --chart-2: 173 58% 39%;
+    --chart-3: 197 37% 24%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+    --chart-1: 220 70% 50%;
+    --chart-2: 160 60% 45%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
+  }
+
+  /* 暖米色防蓝光模式 - 强化防蓝光效果 */
+  .warm-beige {
+    --background: 35 80% 92%;
+    --foreground: 20 40% 20%;
+    --card: 35 60% 88%;
+    --card-foreground: 20 40% 20%;
+    --popover: 35 60% 88%;
+    --popover-foreground: 20 40% 20%;
+    --primary: 20 40% 20%;
+    --primary-foreground: 35 80% 92%;
+    --secondary: 35 40% 82%;
+    --secondary-foreground: 20 40% 20%;
+    --muted: 35 40% 82%;
+    --muted-foreground: 20 25% 40%;
+    --accent: 35 40% 82%;
+    --accent-foreground: 20 40% 20%;
+    --destructive: 0 60% 45%;
+    --destructive-foreground: 35 80% 92%;
+    --border: 35 30% 75%;
+    --input: 35 30% 75%;
+    --ring: 20 40% 20%;
+    --radius: 0.5rem;
+    --chart-1: 25 70% 55%;
+    --chart-2: 15 60% 45%;
+    --chart-3: 35 50% 35%;
+    --chart-4: 45 75% 60%;
+    --chart-5: 55 80% 65%;
+    /* 防蓝光滤镜 */
+    --blue-light-filter: sepia(20%) saturate(120%) hue-rotate(-10deg) brightness(95%);
+  }
+
+  /* 护眼绿防蓝光模式 - 专业护眼配色 */
+  .eye-green {
+    --background: 80 40% 90%;
+    --foreground: 120 35% 15%;
+    --card: 80 30% 86%;
+    --card-foreground: 120 35% 15%;
+    --popover: 80 30% 86%;
+    --popover-foreground: 120 35% 15%;
+    --primary: 120 35% 15%;
+    --primary-foreground: 80 40% 90%;
+    --secondary: 80 25% 78%;
+    --secondary-foreground: 120 35% 15%;
+    --muted: 80 25% 78%;
+    --muted-foreground: 120 25% 35%;
+    --accent: 80 25% 78%;
+    --accent-foreground: 120 35% 15%;
+    --destructive: 0 55% 40%;
+    --destructive-foreground: 80 40% 90%;
+    --border: 80 20% 70%;
+    --input: 80 20% 70%;
+    --ring: 120 35% 15%;
+    --radius: 0.5rem;
+    --chart-1: 100 50% 50%;
+    --chart-2: 60 45% 40%;
+    --chart-3: 140 40% 30%;
+    --chart-4: 40 60% 55%;
+    --chart-5: 160 65% 60%;
+    /* 防蓝光滤镜 */
+    --blue-light-filter: sepia(15%) saturate(110%) hue-rotate(20deg) brightness(92%);
+  }
+
+  /* 暖橙防蓝光模式 - 强力防蓝光 */
+  .warm-orange {
+    --background: 25 90% 90%;
+    --foreground: 10 45% 18%;
+    --card: 25 70% 86%;
+    --card-foreground: 10 45% 18%;
+    --popover: 25 70% 86%;
+    --popover-foreground: 10 45% 18%;
+    --primary: 10 45% 18%;
+    --primary-foreground: 25 90% 90%;
+    --secondary: 25 50% 78%;
+    --secondary-foreground: 10 45% 18%;
+    --muted: 25 50% 78%;
+    --muted-foreground: 10 30% 38%;
+    --accent: 25 50% 78%;
+    --accent-foreground: 10 45% 18%;
+    --destructive: 0 50% 40%;
+    --destructive-foreground: 25 90% 90%;
+    --border: 25 35% 70%;
+    --input: 25 35% 70%;
+    --ring: 10 45% 18%;
+    --radius: 0.5rem;
+    --chart-1: 15 65% 50%;
+    --chart-2: 35 55% 40%;
+    --chart-3: 5 45% 30%;
+    --chart-4: 45 70% 55%;
+    --chart-5: 55 75% 60%;
+    /* 防蓝光滤镜 */
+    --blue-light-filter: sepia(25%) saturate(125%) hue-rotate(-15deg) brightness(90%);
+  }
+
+  /* 强力防蓝光模式 - 夜间专用 */
+  .strong-blue-filter {
+    --background: 15 100% 85%;
+    --foreground: 0 50% 15%;
+    --card: 15 80% 80%;
+    --card-foreground: 0 50% 15%;
+    --popover: 15 80% 80%;
+    --popover-foreground: 0 50% 15%;
+    --primary: 0 50% 15%;
+    --primary-foreground: 15 100% 85%;
+    --secondary: 15 60% 70%;
+    --secondary-foreground: 0 50% 15%;
+    --muted: 15 60% 70%;
+    --muted-foreground: 0 35% 35%;
+    --accent: 15 60% 70%;
+    --accent-foreground: 0 50% 15%;
+    --destructive: 0 45% 35%;
+    --destructive-foreground: 15 100% 85%;
+    --border: 15 40% 62%;
+    --input: 15 40% 62%;
+    --ring: 0 50% 15%;
+    --radius: 0.5rem;
+    --chart-1: 10 60% 45%;
+    --chart-2: 20 50% 35%;
+    --chart-3: 0 40% 25%;
+    --chart-4: 30 65% 50%;
+    --chart-5: 40 70% 55%;
+    /* 强力防蓝光滤镜 */
+    --blue-light-filter: sepia(35%) saturate(140%) hue-rotate(-20deg) brightness(85%) contrast(110%);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* 防蓝光滤镜应用 */
+.warm-beige,
+.eye-green,
+.warm-orange,
+.strong-blue-filter {
+  color-scheme: light;
+  /* 应用防蓝光滤镜到整个页面 */
+  filter: var(--blue-light-filter);
+}
+
+/* 防蓝光模式下的特殊优化 */
+.warm-beige *,
+.eye-green *,
+.warm-orange *,
+.strong-blue-filter * {
+  /* 减少蓝色成分 */
+  text-shadow: 0 0 1px rgba(255, 200, 150, 0.1);
+}
+
+/* 防蓝光模式下的图片优化 */
+.warm-beige img,
+.eye-green img,
+.warm-orange img,
+.strong-blue-filter img {
+  filter: sepia(10%) saturate(90%) brightness(95%);
+}
+
+/* 防蓝光模式下的链接颜色优化 */
+.warm-beige a,
+.eye-green a,
+.warm-orange a,
+.strong-blue-filter a {
+  color: hsl(var(--foreground));
+  text-decoration-color: hsl(var(--muted-foreground));
+}
+
+/* 防蓝光模式下的按钮优化 */
+.warm-beige button,
+.eye-green button,
+.warm-orange button,
+.strong-blue-filter button {
+  background-color: hsl(var(--secondary));
+  border-color: hsl(var(--border));
+  color: hsl(var(--secondary-foreground));
+}
+
+.warm-beige button:hover,
+.eye-green button:hover,
+.warm-orange button:hover,
+.strong-blue-filter button:hover {
+  background-color: hsl(var(--accent));
+  filter: brightness(105%);
+}
+
+/* 确保主题切换时的平滑过渡 */
+* {
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease, filter 0.3s ease;
+}
+
+/* 护眼模式特殊样式 */
+.warm-beige,
+.eye-green,
+.warm-orange,
+.strong-blue-filter {
+  /* 减少整体亮度 */
+  --brightness-adjustment: brightness(92%);
+}
+
+/* 护眼模式下的特殊优化 */
+.warm-beige .website-card:hover,
+.eye-green .website-card:hover,
+.warm-orange .website-card:hover,
+.strong-blue-filter .website-card:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(139, 69, 19, 0.15);
+  filter: brightness(102%);
+}
+
+/* 护眼模式下的滚动条 */
+.warm-beige ::-webkit-scrollbar-thumb {
+  background: hsl(25 40% 60%);
+}
+
+.eye-green ::-webkit-scrollbar-thumb {
+  background: hsl(120 30% 60%);
+}
+
+.warm-orange ::-webkit-scrollbar-thumb {
+  background: hsl(15 40% 60%);
+}
+
+.strong-blue-filter ::-webkit-scrollbar-thumb {
+  background: hsl(0 30% 50%);
+}
+
+/* 护眼模式下的精品和热门标签 */
+.warm-beige .featured-badge {
+  background-color: hsl(200 40% 80%);
+  color: hsl(200 60% 25%);
+}
+
+.warm-beige .hot-badge {
+  background-color: hsl(350 40% 80%);
+  color: hsl(350 60% 25%);
+}
+
+.eye-green .featured-badge {
+  background-color: hsl(200 30% 75%);
+  color: hsl(200 50% 20%);
+}
+
+.eye-green .hot-badge {
+  background-color: hsl(350 30% 75%);
+  color: hsl(350 50% 20%);
+}
+
+.warm-orange .featured-badge {
+  background-color: hsl(200 35% 78%);
+  color: hsl(200 55% 22%);
+}
+
+.warm-orange .hot-badge {
+  background-color: hsl(350 35% 78%);
+  color: hsl(350 55% 22%);
+}
+
+.strong-blue-filter .featured-badge {
+  background-color: hsl(200 25% 70%);
+  color: hsl(200 45% 18%);
+}
+
+.strong-blue-filter .hot-badge {
+  background-color: hsl(350 25% 70%);
+  color: hsl(350 45% 18%);
+}
+
+/* 防蓝光模式下的表单优化 */
+.warm-beige input,
+.eye-green input,
+.warm-orange input,
+.strong-blue-filter input,
+.warm-beige textarea,
+.eye-green textarea,
+.warm-orange textarea,
+.strong-blue-filter textarea {
+  background-color: hsl(var(--background));
+  border-color: hsl(var(--border));
+  color: hsl(var(--foreground));
+  /* 减少蓝光反射 */
+  box-shadow: inset 0 1px 3px rgba(139, 69, 19, 0.1);
+}
+
+.warm-beige input:focus,
+.eye-green input:focus,
+.warm-orange input:focus,
+.strong-blue-filter input:focus,
+.warm-beige textarea:focus,
+.eye-green textarea:focus,
+.warm-orange textarea:focus,
+.strong-blue-filter textarea:focus {
+  border-color: hsl(var(--ring));
+  box-shadow: 0 0 0 2px hsl(var(--ring) / 0.1), inset 0 1px 3px rgba(139, 69, 19, 0.1);
+}
+
+/* 防蓝光模式下的卡片优化 */
+.warm-beige .card,
+.eye-green .card,
+.warm-orange .card,
+.strong-blue-filter .card {
+  background-color: hsl(var(--card));
+  border-color: hsl(var(--border));
+  /* 添加暖色调阴影 */
+  box-shadow: 0 2px 8px rgba(139, 69, 19, 0.08);
+}
+
+/* 防蓝光模式下的搜索框优化 */
+.warm-beige .search-dropdown,
+.eye-green .search-dropdown,
+.warm-orange .search-dropdown,
+.strong-blue-filter .search-dropdown {
+  box-shadow: 0 10px 15px -3px rgba(139, 69, 19, 0.1), 0 4px 6px -2px rgba(139, 69, 19, 0.05);
+  background-color: hsl(var(--card));
+  border-color: hsl(var(--border));
+}
+
+/* 防蓝光模式指示器 */
+.blue-light-indicator {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+  background: linear-gradient(135deg, #ff6b35, #f7931e);
+  color: white;
+  padding: 8px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+  box-shadow: 0 4px 12px rgba(255, 107, 53, 0.3);
+  animation: pulse 2s infinite;
+}
+
+/* 防蓝光指示器优化样式 */
+.blue-light-indicator {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+}
+
+.dark .blue-light-indicator {
+  background: rgba(17, 24, 39, 0.95);
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.blue-light-indicator:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+}
+
+.dark .blue-light-indicator:hover {
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+}
+
+/* 防蓝光模式下的指示器样式 */
+.warm-beige .blue-light-indicator {
+  background: rgba(252, 248, 227, 0.95);
+  border-color: rgba(217, 119, 6, 0.2);
+  box-shadow: 0 8px 32px rgba(217, 119, 6, 0.1);
+}
+
+.eye-green .blue-light-indicator {
+  background: rgba(240, 253, 244, 0.95);
+  border-color: rgba(34, 197, 94, 0.2);
+  box-shadow: 0 8px 32px rgba(34, 197, 94, 0.1);
+}
+
+.warm-orange .blue-light-indicator {
+  background: rgba(255, 247, 237, 0.95);
+  border-color: rgba(249, 115, 22, 0.2);
+  box-shadow: 0 8px 32px rgba(249, 115, 22, 0.1);
+}
+
+.strong-blue-filter .blue-light-indicator {
+  background: rgba(254, 242, 242, 0.95);
+  border-color: rgba(239, 68, 68, 0.2);
+  box-shadow: 0 8px 32px rgba(239, 68, 68, 0.1);
+}
+
+/* 防护状态条动画 */
+@keyframes protectionLevel {
+  0% {
+    width: 0%;
+  }
+  100% {
+    width: var(--protection-width);
+  }
+}
+
+/* 收起/展开动画 */
+.indicator-expanded {
+  animation: expandIndicator 0.3s ease-out;
+}
+
+.indicator-collapsed {
+  animation: collapseIndicator 0.3s ease-out;
+}
+
+@keyframes expandIndicator {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes collapseIndicator {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0.9;
+    transform: scale(0.95);
+  }
+}
+
+/* 脉冲动画优化 */
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.1);
+  }
+}
+
+/* 悬停效果优化 */
+.blue-light-indicator .hover-effect {
+  transition: all 0.2s ease;
+}
+
+.blue-light-indicator:hover .hover-effect {
+  transform: scale(1.05);
+}
+
+/* 按钮悬停效果 */
+.blue-light-indicator button:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.dark .blue-light-indicator button:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+/* 防蓝光模式下的按钮悬停 */
+.warm-beige .blue-light-indicator button:hover {
+  background-color: rgba(217, 119, 6, 0.1);
+}
+
+.eye-green .blue-light-indicator button:hover {
+  background-color: rgba(34, 197, 94, 0.1);
+}
+
+.warm-orange .blue-light-indicator button:hover {
+  background-color: rgba(249, 115, 22, 0.1);
+}
+
+.strong-blue-filter .blue-light-indicator button:hover {
+  background-color: rgba(239, 68, 68, 0.1);
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}
+
+/* 深色模式样式保持不变 */
+.dark {
+  color-scheme: dark;
+}
+
+/* 滚动条样式优化 */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: hsl(var(--muted));
+}
+
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--muted-foreground) / 0.3);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--muted-foreground) / 0.5);
+}
+
+/* 深色模式下的滚动条 */
+.dark ::-webkit-scrollbar-track {
+  background: hsl(var(--muted));
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: hsl(var(--muted-foreground) / 0.4);
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--muted-foreground) / 0.6);
+}
+
+/* 搜索结果悬浮框优化 */
+.search-dropdown {
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.dark .search-dropdown {
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.2);
+}
+
+/* 卡片悬停效果优化 */
+.website-card {
+  transition: all 0.2s ease;
+}
+
+.website-card:hover {
+  transform: translateY(-1px);
+}
+
+/* 管理员按钮悬停效果 */
+.admin-button {
+  transition: all 0.2s ease;
+}
+
+.admin-button:hover {
+  background-color: hsl(var(--accent));
+}
+
+/* 精品和热门标签样式 */
+.featured-badge {
+  background-color: hsl(220 100% 95%);
+  color: hsl(220 100% 40%);
+}
+
+.dark .featured-badge {
+  background-color: hsl(220 100% 10%);
+  color: hsl(220 100% 70%);
+}
+
+.hot-badge {
+  background-color: hsl(0 100% 95%);
+  color: hsl(0 100% 40%);
+}
+
+.dark .hot-badge {
+  background-color: hsl(0 100% 10%);
+  color: hsl(0 100% 70%);
+}
+
+/* 表单输入框在深色模式下的优化 */
+.dark input[type="text"],
+.dark input[type="email"],
+.dark input[type="password"],
+.dark input[type="url"],
+.dark textarea {
+  background-color: hsl(var(--background));
+  border-color: hsl(var(--border));
+  color: hsl(var(--foreground));
+}
+
+.dark input[type="text"]:focus,
+.dark input[type="email"]:focus,
+.dark input[type="password"]:focus,
+.dark input[type="url"]:focus,
+.dark textarea:focus {
+  border-color: hsl(var(--ring));
+  box-shadow: 0 0 0 2px hsl(var(--ring) / 0.2);
+}
+
+/* 按钮在深色模式下的优化 */
+.dark button[data-state="open"] {
+  background-color: hsl(var(--accent));
+}
+
+/* 下拉菜单在深色模式下的优化 */
+.dark [data-radix-popper-content-wrapper] {
+  background-color: hsl(var(--popover));
+  border-color: hsl(var(--border));
+}
+
+/* 对话框在深色模式下的优化 */
+.dark [role="dialog"] {
+  background-color: hsl(var(--card));
+  border-color: hsl(var(--border));
+}
+
+/* 选择框在深色模式下的优化 */
+.dark [role="checkbox"] {
+  border-color: hsl(var(--border));
+}
+
+.dark [role="checkbox"][data-state="checked"] {
+  background-color: hsl(var(--primary));
+  border-color: hsl(var(--primary));
+}
+
+/* 标签页在深色模式下的优化 */
+.dark [role="tablist"] button[data-state="active"] {
+  background-color: hsl(var(--background));
+  color: hsl(var(--foreground));
+}
+
+/* 工具提示在深色模式下的优化 */
+.dark [role="tooltip"] {
+  @apply bg-slate-700 text-slate-100 border-slate-600;
+}
+
+/* 侧边栏布局样式 */
+.sidebar-collapsed {
+  margin-left: 4rem !important;
+}
+
+.sidebar-expanded {
+  margin-left: 15rem !important;
+}
+
+/* 响应式侧边栏处理 */
+@media (max-width: 768px) {
+  .sidebar-collapsed,
+  .sidebar-expanded {
+    margin-left: 0 !important;
+  }
+}
+
+/* 平滑过渡效果 */
+main {
+  transition: margin-left 0.3s ease-in-out;
+}
+
+/* 侧边栏固定定位时的内容区域调整 */
+@media (min-width: 768px) {
+  .content-with-sidebar {
+    margin-left: 240px;
+    transition: margin-left 0.3s ease-in-out;
+  }
+  
+  .content-with-sidebar.sidebar-collapsed {
+    margin-left: 64px;
+  }
+}

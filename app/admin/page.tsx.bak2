@@ -1,0 +1,131 @@
+"use client"
+
+import { useEffect, useState } from "react"
+import { useRouter } from "next/navigation"
+import Link from "next/link"
+import { Settings, Shield } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { WebsiteForm } from "@/components/website-form"
+import { CategoryForm } from "@/components/category-form"
+import { useDataStore } from "@/lib/store"
+import { useAdminAuth } from "@/lib/admin-auth-context"
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
+import { AlertCircle } from "lucide-react"
+import { MigrationPromptImproved } from "@/components/migration-prompt-improved"
+
+
+export default function AdminPage() {
+  const categories = useDataStore((state) => state.categories)
+  const { isAuthenticated } = useAdminAuth()
+  const router = useRouter()
+  const [isLoading, setIsLoading] = useState(true)
+  const [isMounted, setIsMounted] = useState(false)
+  
+  // 调试日志
+  useEffect(() => {
+    console.log('Admin页面状态:', {
+      isMounted,
+      isLoading,
+      isAuthenticated,
+      pathname: window.location.pathname
+    })
+  }, [isMounted, isLoading, isAuthenticated])
+
+  // 确保组件已挂载
+  useEffect(() => {
+    setIsMounted(true)
+    setIsLoading(false)
+  }, [])
+
+  // 如果未认证，重定向到首页 - 添加延迟避免闪烁和路由冲突
+  useEffect(() => {
+    if (isMounted && !isLoading && !isAuthenticated) {
+      console.log("未认证，准备重定向到首页")
+      // 添加小延迟确保所有状态都已稳定
+      const timer = setTimeout(() => {
+        console.log("执行重定向到首页")
+        router.replace("/") // 使用 replace 而不是 push 避免历史记录问题
+      }, 100)
+      
+      return () => clearTimeout(timer)
+    }
+  }, [isAuthenticated, router, isMounted, isLoading])
+
+  // 显示加载状态 - 确保在认证状态确定前不渲染内容
+  if (isLoading || !isMounted) {
+    return (
+      <div className="flex items-center justify-center h-[50vh]">
+        <div className="flex flex-col items-center gap-4">
+          <div className="h-8 w-8 animate-spin rounded-full border-4 border-gray-300 border-t-blue-600"></div>
+          <p className="text-muted-foreground">正在验证访问权限...</p>
+        </div>
+      </div>
+    )
+  }
+
+  // 如果未认证，显示错误信息
+  if (!isAuthenticated) {
+    return (
+      <div className="space-y-6">
+        <Alert variant="destructive">
+          <AlertCircle className="h-4 w-4" />
+          <AlertTitle>访问受限</AlertTitle>
+          <AlertDescription>您需要管理员权限才能访问此页面。请先登录管理员账号。</AlertDescription>
+        </Alert>
+        <Button onClick={() => router.push("/")}>返回首页</Button>
+      </div>
+    )
+  }
+
+  return (
+    <div className="space-y-10">
+      {/* 数据迁移提示 */}
+      <MigrationPromptImproved />
+      
+      <section className="flex items-center justify-between">
+        <div className="space-y-2">
+          <h1 className="text-3xl font-bold tracking-tight">管理员控制台</h1>
+          <p className="text-muted-foreground">管理网站和分类，系统将自动抓取网站信息</p>
+        </div>
+        <div className="flex gap-2">
+          <Button asChild variant="outline">
+            <Link href="/admin/backup">
+              <Shield className="mr-2 h-4 w-4" />
+              数据备份
+            </Link>
+          </Button>
+          <Button asChild variant="outline">
+            <Link href="/admin/settings">
+              <Settings className="mr-2 h-4 w-4" />
+              管理员设置
+            </Link>
+          </Button>
+        </div>
+      </section>
+
+      <Tabs defaultValue="website" className="space-y-6">
+        <TabsList>
+          <TabsTrigger value="website">添加网站</TabsTrigger>
+          <TabsTrigger value="category">创建分类</TabsTrigger>
+        </TabsList>
+
+        <TabsContent value="website" className="space-y-6">
+          <div className="space-y-2">
+            <h2 className="text-xl font-semibold">添加新网站</h2>
+            <p className="text-sm text-muted-foreground">添加网站到导航，系统将自动抓取网站信息</p>
+          </div>
+          <WebsiteForm categories={categories} />
+        </TabsContent>
+
+        <TabsContent value="category" className="space-y-6">
+          <div className="space-y-2">
+            <h2 className="text-xl font-semibold">创建新分类</h2>
+            <p className="text-sm text-muted-foreground">创建新的网站分类来组织网站</p>
+          </div>
+          <CategoryForm />
+        </TabsContent>
+      </Tabs>
+    </div>
+  )
+}

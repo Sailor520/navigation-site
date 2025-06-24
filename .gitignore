@@ -1,0 +1,66 @@
+# Dependencies
+node_modules/
+.pnpm-debug.log*
+
+# Next.js
+.next/
+out/
+dist/
+
+# Environment variables - 严格保护
+.env*
+!.env.example
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Coverage directory used by tools like istanbul
+coverage/
+
+# Supabase
+supabase/.temp/
+supabase/.branches
+supabase/.env
+
+# Build artifacts
+build/
+
+# 历史记录和临时文件 - 避免意外提交敏感信息
+.specstory/
+*.bak
+*.backup
+*.tmp
+temp/
+tmp/
+
+# 测试和调试文件
+debug.js
+test-*.js
+*-debug.*
+*-test.*
+.env
+.specstory/
