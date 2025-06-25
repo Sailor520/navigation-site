@@ -51,59 +51,84 @@ export default function RootLayout({
             __html: `
               // 最早阶段的浏览器扩展错误拦截器
               (function() {
+                // 全局错误处理器
                 const originalError = window.onerror;
                 window.onerror = function(message, source, lineno, colno, error) {
                   const isExtensionError = 
-                    (source && source.includes('chrome-extension://')) ||
-                    (source && source.includes('moz-extension://')) ||
-                    (source && source.includes('frame_ant')) ||
-                    (message && message.includes('chrome-extension')) ||
-                    (message && message.includes('undefined') && message.includes('JSON'));
+                    (source && (source.includes('chrome-extension://') || source.includes('moz-extension://'))) ||
+                    (message && (message.includes('chrome-extension') || message.includes('moz-extension'))) ||
+                    (message && message.includes('web_accessible_resources')) ||
+                    (message && message.includes('Extension')) ||
+                    (source && source.includes('frame_ant'));
                   
                   if (isExtensionError) {
-                    console.warn('🔒 [早期拦截] 扩展错误被提前处理:', message);
+                    console.warn('🔒 [扩展错误拦截] 已处理扩展相关错误:', { message, source });
                     return true; // 阻止错误传播
                   }
                   
-                  // 调用原始错误处理器
-                  if (originalError) {
-                    return originalError.apply(this, arguments);
-                  }
-                  return false;
+                  return originalError ? originalError.apply(this, arguments) : false;
                 };
                 
-                // 拦截JSON.parse错误
+                // Promise 拒绝处理器 - 关键修复
+                window.addEventListener('unhandledrejection', function(event) {
+                  const reason = event.reason;
+                  const isExtensionError = 
+                    (reason && reason.message && (
+                      reason.message.includes('chrome-extension://') ||
+                      reason.message.includes('moz-extension://') ||
+                      reason.message.includes('web_accessible_resources') ||
+                      reason.message.includes('dynamically imported module')
+                    )) ||
+                    (reason && reason.stack && (
+                      reason.stack.includes('chrome-extension://') ||
+                      reason.stack.includes('moz-extension://')
+                    ));
+                  
+                  if (isExtensionError) {
+                    console.warn('🔒 [Promise错误拦截] 已处理扩展相关Promise错误:', reason);
+                    event.preventDefault();
+                    return;
+                  }
+                  
+                  // 处理代码分割加载失败
+                  if (reason && reason.name === 'ChunkLoadError') {
+                    console.warn('🔧 [代码分割错误] 检测到代码块加载失败，将重新加载页面');
+                    event.preventDefault();
+                    setTimeout(() => window.location.reload(), 1000);
+                    return;
+                  }
+                });
+                
+                // 拦截动态导入错误
+                const originalImport = window.import || (() => {});
+                if (typeof window.import === 'undefined') {
+                  window.import = function(specifier) {
+                    if (specifier && specifier.includes('chrome-extension://')) {
+                      console.warn('🔒 [动态导入拦截] 阻止扩展模块导入:', specifier);
+                      return Promise.reject(new Error('Extension import blocked'));
+                    }
+                    return originalImport.apply(this, arguments);
+                  };
+                }
+                
+                // JSON 解析保护
                 const originalJSONParse = JSON.parse;
                 JSON.parse = function(text, reviver) {
                   if (text === undefined || text === null || text === 'undefined' || text === 'null') {
-                    console.warn('🔒 [JSON早期保护] 拦截了无效的JSON输入:', text);
+                    console.warn('🔒 [JSON保护] 拦截无效JSON输入:', text);
                     return null;
                   }
                   return originalJSONParse.call(this, text, reviver);
                 };
                 
-                // 处理代码分割加载失败
-                window.addEventListener('unhandledrejection', function(event) {
-                  if (event.reason && event.reason.name === 'ChunkLoadError') {
-                    console.warn('🔧 [代码分割错误] 检测到代码块加载失败，将重新加载页面');
-                    event.preventDefault();
-                    // 延迟重新加载，避免无限循环
-                    setTimeout(() => {
-                      window.location.reload();
-                    }, 1000);
-                  }
-                });
-                
-                // 注册服务工作者以提高资源加载稳定性
-                if ('serviceWorker' in navigator) {
+                // 服务工作者注册（仅在支持的环境中）
+                if ('serviceWorker' in navigator && !navigator.serviceWorker.controller) {
                   navigator.serviceWorker.register('/sw.js')
-                    .then((registration) => {
-                      console.log('🔧 [Service Worker] 注册成功:', registration);
-                    })
-                    .catch((error) => {
-                      console.warn('🔧 [Service Worker] 注册失败:', error);
-                    });
+                    .then(registration => console.log('🔧 [SW] 注册成功'))
+                    .catch(error => console.log('🔧 [SW] 注册失败:', error.message));
                 }
+                
+                console.log('🔒 [扩展防护] 浏览器扩展错误防护已启用');
               })();
             `,
           }}
